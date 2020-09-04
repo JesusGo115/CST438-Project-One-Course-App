@@ -7,4 +7,12 @@
     <string name="username_password">Please put your username and password</string>
     <string name="invalid_username_password">Invalid username or password</string>
     <string name="success">Success!</string>
+    <string name="create_account">Create Account</string>
+    <string name="create_username">Create Username</string>
+    <string name="create_password">Create Password</string>
+    <string name="username_taken">Username already exists</string>
+    <string name="create_user_pass">Create your username and password</string>
+    <string name="incorrect_username">Incorrect username</string>
+    <string name="incorrect_password">Incorrect password, try again.</string>
+    <string name="missing_user_pass">Please input username or password</string>
 </resources>
