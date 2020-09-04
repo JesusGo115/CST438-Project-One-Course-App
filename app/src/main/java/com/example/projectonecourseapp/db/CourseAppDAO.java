@@ -13,7 +13,10 @@ public interface CourseAppDAO
 {
     //User
     @Insert
-    void insert(User...users);
+    void addUser(User...users);
+
+    @Query("select * from " + AppDatabase.USER_TABLE + " where mUserName = :username and mPassword = :password")
+    User login(String username, String password);
 
     @Update
     void update(User...users);

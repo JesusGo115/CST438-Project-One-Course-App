@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Project One Course App</string>
-    <string name="username" />
-    <string name="password" />
+    <string name="username">Username</string>
+    <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="title">Grade Tracker</string>
+    <string name="username_password">Please put your username and password</string>
+    <string name="invalid_username_password">Invalid username or password</string>
+    <string name="success">Success!</string>
 </resources>

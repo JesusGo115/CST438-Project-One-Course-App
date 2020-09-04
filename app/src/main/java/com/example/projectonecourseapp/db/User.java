@@ -1,6 +1,7 @@
 package com.example.projectonecourseapp.db;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = AppDatabase.USER_TABLE)
@@ -14,6 +15,14 @@ public class User
     private String mPassword;
     private String mFirstName;
     private String mLastName;
+
+    public User() {}
+
+    @Ignore
+    public User(String username, String password) {
+        this.mUserName = username;
+        this.mPassword = password;
+    }
 
     public User(String userName, String password, String firstName, String lastName) {
         this.mUserName = userName;
