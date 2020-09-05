@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.projectonecourseapp.db.AppDatabase;
 import com.example.projectonecourseapp.db.Course;
+import com.example.projectonecourseapp.db.CourseAppDAO;
 import com.example.projectonecourseapp.db.User;
 
 import java.util.ArrayList;
@@ -29,8 +31,14 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_user_course);
 
+        CourseAppDAO dao = AppDatabase.getAppDatabase(DisplayUserCourseActivity.this).dao();
+        User user = dao.getUserByUsername(MainActivity.username);
+
+
         TextView message = findViewById(R.id.message);
-        message.setText(String.format("Welcome, %s", MainActivity.username));
+        message.setText(String.format("Welcome, %s", user.getUserName()));
+
+
 
         Button add_course_button = findViewById(R.id.add_course_button);
         add_course_button.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +49,6 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
             }
         });
 
-        // display courses...
 
 
 

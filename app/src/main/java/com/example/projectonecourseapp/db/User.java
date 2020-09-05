@@ -18,7 +18,6 @@ public class User
     private String mPassword;
     private String mFirstName;
     private String mLastName;
-    private List<Course> courses_taken = new ArrayList<>();
 
     public User() {}
 
@@ -73,14 +72,6 @@ public class User
 
     public void setLastName(String lastName) {
         mLastName = lastName;
-    }
-
-    public void addCourse(Course course) {
-        courses_taken.add(course);
-    }
-
-    public void deleteCourse(Course course) {
-        courses_taken.remove(course);
     }
 
     @Override
