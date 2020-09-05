@@ -4,7 +4,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username_ = username.getText().toString();
+                final String username_ = username.getText().toString();
                 String password_ = password.getText().toString();
                 TextView message = findViewById(R.id.message);
 
@@ -53,6 +55,11 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     // successful
                     MainActivity.username = username_;
+
+                      Intent intent = new Intent(LoginActivity.this, DisplayUserCourseActivity.class);
+                      startActivity(intent);
+
+                    /*
                     AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
                     alert.setTitle("Success!");
                     alert.setMessage("Welcome " + username_);
@@ -63,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                     alert.show();
+                    */
                 }
             }
         });

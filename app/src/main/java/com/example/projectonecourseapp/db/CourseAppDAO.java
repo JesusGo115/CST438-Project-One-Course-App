@@ -19,10 +19,10 @@ public interface CourseAppDAO
     User login(String username, String password);
 
     @Update
-    void update(User...users);
+    void updateUser(User...users);
 
     @Delete
-    void delete(User user);
+    void deleteUser(User user);
 
     @Query("SELECT * FROM " + AppDatabase.USER_TABLE)
     List<User> getAllUsers();
@@ -40,13 +40,13 @@ public interface CourseAppDAO
 
     //Course
     @Insert
-    void insert(Course...courses);
+    void addCourse(Course...courses);
 
     @Update
-    void update(Course...courses);
+    void updateCourse(Course courses);
 
     @Delete
-    void delete(Course course);
+    void deleteCourse(Course course);
 
     @Query("SELECT * FROM " + AppDatabase.COURSE_TABLE)
     List<Course> getAllCourses();
@@ -55,7 +55,7 @@ public interface CourseAppDAO
     List<Course> getAllCoursesByTitle(String title);
 
     @Query("SELECT * FROM " + AppDatabase.COURSE_TABLE + " WHERE mCourseId = :courseId")
-    Course getCourseByCourseId(int courseId);
+    List<Course> getCourseByCourseId(int courseId);
 
     //********************************************
 
@@ -82,19 +82,19 @@ public interface CourseAppDAO
 
     //Assignment
     @Insert
-    void insert(Assignment...assignments);
+    void addAssignment(Assignment...assignments);
 
     @Update
-    void update(Assignment...assignments);
+    void updateAssignment(Assignment...assignments);
 
     @Delete
-    void delete(Assignment assignment);
+    void deleteAssignment(Assignment assignment);
 
     @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE)
     List<Assignment> getAllAssignments();
 
     @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE + " WHERE mAssignmentId = :assignmentId")
-    Assignment getAssignmentByAssignmentId(int assignmentId);
+    List<Assignment> getAssignmentByAssignmentId(int assignmentId);
 
     @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE + " WHERE mCategoryId = :categoryId")
     Assignment getAssignmentByCategoryId(int categoryId);

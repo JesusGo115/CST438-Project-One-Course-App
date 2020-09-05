@@ -16,6 +16,14 @@ public class Course
     private String mStartDate;
     private String mEndDate;
 
+    public Course() {
+
+    }
+
+    public Course(String course_name) {
+        this.mTitle = course_name;
+    }
+
     public Course(String instructor, String title, String description, String startDate, String endDate) {
         this.mInstructor = instructor;
         this.mTitle = title;
