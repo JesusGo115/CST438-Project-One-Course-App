@@ -31,7 +31,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                 createAccount();
             }
         });
-        
     }
 
     public void createAccount() {
