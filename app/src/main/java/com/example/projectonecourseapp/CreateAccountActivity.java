@@ -45,11 +45,11 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         // check if user exists
         User user = AppDatabase.getAppDatabase(CreateAccountActivity.this).
-                dao().getUserByUsername(username_);
+                getCourseDao().getUserByUsername(username_);
         if(user == null) {
             // add new user
             User new_user = new User(username_, password_);
-            CourseAppDAO dao = AppDatabase.getAppDatabase(CreateAccountActivity.this).dao();
+            CourseAppDAO dao = AppDatabase.getAppDatabase(CreateAccountActivity.this).getCourseDao();
             dao.addUser(new_user);
             alert("Success!", "Account successfully created.");
         } else {

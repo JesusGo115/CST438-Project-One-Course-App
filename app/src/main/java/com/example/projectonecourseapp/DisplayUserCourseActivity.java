@@ -31,7 +31,7 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_user_course);
 
-        CourseAppDAO dao = AppDatabase.getAppDatabase(DisplayUserCourseActivity.this).dao();
+        CourseAppDAO dao = AppDatabase.getAppDatabase(DisplayUserCourseActivity.this).getCourseDao();
         User user = dao.getUserByUsername(MainActivity.username);
 
 

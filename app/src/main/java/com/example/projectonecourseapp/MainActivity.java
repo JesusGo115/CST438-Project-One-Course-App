@@ -3,6 +3,7 @@ package com.example.projectonecourseapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,12 +29,14 @@ public class MainActivity extends AppCompatActivity {
         AppDatabase.getAppDatabase(MainActivity.this).loadData(this);
 
         Button login_button = findViewById(R.id.login_button);
+
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("MainActivity", "onClick for login called");
 
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = getIntent(MainActivity.this, LoginActivity.class);
+
                 startActivity(intent);
             }
         });
@@ -43,10 +46,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("MainActivity", "onClick for create account called");
-                Intent intent = new Intent(MainActivity.this, CreateAccountActivity.class);
+
+                Intent intent = getIntent(MainActivity.this, CreateAccountActivity.class);
+
                 startActivity(intent);
             }
         });
 
+    }
+
+    public static Intent getIntent(Context context, Class<?> classActivity) {
+        return new Intent(context, classActivity);
     }
 }

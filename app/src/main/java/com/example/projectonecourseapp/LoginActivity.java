@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                CourseAppDAO dao = AppDatabase.getAppDatabase(LoginActivity.this).dao();
+                CourseAppDAO dao = AppDatabase.getAppDatabase(LoginActivity.this).getCourseDao();
                 User user = dao.login(username_, password_);
                 if(user == null) {
                     // unsuccessful login, check is username or password is wrong

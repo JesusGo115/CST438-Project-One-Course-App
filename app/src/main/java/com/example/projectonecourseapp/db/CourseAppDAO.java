@@ -27,6 +27,9 @@ public interface CourseAppDAO
     @Query("SELECT * FROM " + AppDatabase.USER_TABLE)
     List<User> getAllUsers();
 
+    @Query("select * from " + AppDatabase.USER_TABLE + " where mUserName = :username and mPassword = :password")
+    User login(String username, String password);
+
     @Query("SELECT COUNT(*) FROM " + AppDatabase.USER_TABLE + " WHERE mUserName = :username")
     int countUser(String username);
 
@@ -61,13 +64,13 @@ public interface CourseAppDAO
 
     //GradeCategory
     @Insert
-    void insert(GradeCategory...gradeCategories);
+    void addGradeCategory(GradeCategory...gradeCategories);
 
     @Update
-    void update(GradeCategory...gradeCategories);
+    void updateGradeCategory(GradeCategory...gradeCategories);
 
     @Delete
-    void delete(GradeCategory gradeCategory);
+    void deleteGradeCategory(GradeCategory gradeCategory);
 
     @Query("SELECT * FROM " + AppDatabase.GRADE_CATEGORY_TABLE)
     List<GradeCategory> getAllGradeCategories();
@@ -106,13 +109,13 @@ public interface CourseAppDAO
 
     //Grade
     @Insert
-    void insert(Grade...grades);
+    void addGrade(Grade...grades);
 
     @Update
-    void update(Grade...grades);
+    void updateGrade(Grade...grades);
 
     @Delete
-    void delete(Grade grade);
+    void deleteGrade(Grade grade);
 
     @Query("SELECT * FROM " + AppDatabase.GRADE_TABLE)
     List<Grade> getAllGrades();
@@ -133,13 +136,13 @@ public interface CourseAppDAO
 
     //Enrollment
     @Insert
-    void insert(Enrollment...enrollments);
+    void addEnrollment(Enrollment...enrollments);
 
     @Update
-    void update(Enrollment...enrollments);
+    void updateEnrollment(Enrollment...enrollments);
 
     @Delete
-    void delete(Enrollment enrollment);
+    void deleteEnrollment(Enrollment enrollment);
 
     @Query("SELECT * FROM " + AppDatabase.ENROLLMENT_TABLE)
     List<Enrollment> getAllEnrollments();

@@ -27,8 +27,8 @@ public abstract class AppDatabase extends RoomDatabase
     public static final String GRADE_TABLE = "GRADE_TABLE";
     public static final String ENROLLMENT_TABLE = "ENROLLMENT_TABLE";
 
-    // database?
-    public abstract CourseAppDAO dao();
+    public abstract CourseAppDAO getCourseDao();
+
     public static AppDatabase getAppDatabase(final Context context) {
         if(instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
@@ -42,14 +42,14 @@ public abstract class AppDatabase extends RoomDatabase
     }
 
     public void loadData(Context context) {
-        List<User> userList = AppDatabase.getAppDatabase(context).dao().getAllUsers();
+        List<User> userList = AppDatabase.getAppDatabase(context).getCourseDao().getAllUsers();
         if(userList.size() == 0) {
             loadUsers(context);
         }
     }
 
     public void loadUsers(Context context) {
-        CourseAppDAO dao = getAppDatabase(context).dao();
+        CourseAppDAO dao = getAppDatabase(context).getCourseDao();
 
         User djarin = new User("din_djarin", "baby_yoda_ftw");
         dao.addUser(djarin);
