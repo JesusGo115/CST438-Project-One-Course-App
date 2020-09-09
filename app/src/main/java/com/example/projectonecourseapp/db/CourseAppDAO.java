@@ -27,9 +27,6 @@ public interface CourseAppDAO
     @Query("SELECT * FROM " + AppDatabase.USER_TABLE)
     List<User> getAllUsers();
 
-    @Query("select * from " + AppDatabase.USER_TABLE + " where mUserName = :username and mPassword = :password")
-    User login(String username, String password);
-
     @Query("SELECT COUNT(*) FROM " + AppDatabase.USER_TABLE + " WHERE mUserName = :username")
     int countUser(String username);
 
