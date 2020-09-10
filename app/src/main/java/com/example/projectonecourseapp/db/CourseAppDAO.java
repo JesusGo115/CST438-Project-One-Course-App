@@ -57,6 +57,9 @@ public interface CourseAppDAO
     @Query("SELECT * FROM " + AppDatabase.COURSE_TABLE + " WHERE mCourseId = :courseId")
     List<Course> getCourseByCourseId(int courseId);
 
+    @Query("select * from " + AppDatabase.COURSE_TABLE + " where username = :username")
+    List<Course> getCoursesTaken(String username);
+
     //********************************************
 
     //GradeCategory

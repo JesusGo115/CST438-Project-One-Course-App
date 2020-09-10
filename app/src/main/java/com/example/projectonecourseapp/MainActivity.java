@@ -14,10 +14,12 @@ import com.example.projectonecourseapp.db.AppDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static MainActivity instance = null;
     public static String username = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        instance = this;
 
         Log.d("MainActivity", "onCreate called");
         super.onCreate(savedInstanceState);
@@ -29,33 +31,18 @@ public class MainActivity extends AppCompatActivity {
         AppDatabase.getAppDatabase(MainActivity.this).loadData(this);
 
         Button login_button = findViewById(R.id.login_button);
-
-        login_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("MainActivity", "onClick for login called");
-
-                Intent intent = getIntent(MainActivity.this, LoginActivity.class);
-
-                startActivity(intent);
-            }
+        login_button.setOnClickListener(v -> {
+            Log.d("MainActivity", "onClick for login called");
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
         });
 
         Button create_account_button = findViewById(R.id.create_account_button);
-        create_account_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("MainActivity", "onClick for create account called");
+        create_account_button.setOnClickListener(v -> {
+            Log.d("MainActivity", "onClick for create account called");
 
-                Intent intent = getIntent(MainActivity.this, CreateAccountActivity.class);
-
-                startActivity(intent);
-            }
+            Intent intent = new Intent(MainActivity.this, CreateAccountActivity.class);
+            startActivity(intent);
         });
-
-    }
-
-    public static Intent getIntent(Context context, Class<?> classActivity) {
-        return new Intent(context, classActivity);
     }
 }

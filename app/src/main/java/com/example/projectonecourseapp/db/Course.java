@@ -1,5 +1,6 @@
 package com.example.projectonecourseapp.db;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -16,20 +17,21 @@ public class Course
     private String mStartDate;
     private String mEndDate;
 
+    // username of student to display at the landing page
+    @NonNull
+    private String username;
+
     public Course() {
 
     }
 
-    public Course(String course_name) {
-        this.mTitle = course_name;
-    }
-
-    public Course(String instructor, String title, String description, String startDate, String endDate) {
+    public Course(String course_name, String course_id, String instructor, String start_date, String end_date, String username) {
+        this.mDescription = course_name;
+        this.mTitle = course_id;
         this.mInstructor = instructor;
-        this.mTitle = title;
-        this.mDescription = description;
-        this.mStartDate = startDate;
-        this.mEndDate = endDate;
+        this.mStartDate = start_date;
+        this.mEndDate = end_date;
+        this.username = username;
     }
 
     public int getCourseId() {
@@ -78,6 +80,14 @@ public class Course
 
     public void setEndDate(String endDate) {
         mEndDate = endDate;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
