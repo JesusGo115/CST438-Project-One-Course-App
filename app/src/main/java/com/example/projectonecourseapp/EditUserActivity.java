@@ -86,14 +86,11 @@ public class EditUserActivity extends AppCompatActivity {
         dao.updateUser(user);
 
         for(Course course: courses_taken) {
-            course.setUsername(user.getFirstName());
+            course.setUsername(user.getUserName());
             dao.updateCourse(course);
         }
 
         alert("Success!", "You have updated your profile!");
-
-
-
     }
 
     public void alert(String title, String message) {
