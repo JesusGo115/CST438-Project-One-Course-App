@@ -29,12 +29,19 @@ public class AddCourseActivity extends AppCompatActivity {
         submit_button.setOnClickListener(v -> checkInputs());
     }
 
-    public void alert(String error) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Error");
-        builder.setPositiveButton("Okay", (dialog, which) -> dialog.dismiss());
+    public void alert(String title, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setPositiveButton("Okay", (dialogInterface, i) -> {
+            if(title.equals("Success!")) {
+                finish();
+            } else {
+                dialogInterface.dismiss();
+            }
+        });
+
         AlertDialog dialog = builder.create();
-        dialog.setMessage(error);
+        dialog.setMessage(message);
         dialog.show();
     }
 
@@ -54,27 +61,27 @@ public class AddCourseActivity extends AppCompatActivity {
         String end_ = end_date.getText().toString();
 
         if(course_name_.isEmpty()) {
-            alert("No Course Name entered");
+            alert("Error", "No Course Name entered");
             return;
         }
 
         if(course_id_.isEmpty()) {
-            alert("No Course ID entered");
+            alert("Error","No Course ID entered");
             return;
         }
 
         if(instructor_.isEmpty()) {
-            alert("No Instructor Name entered");
+            alert("Error", "No Instructor Name entered");
             return;
         }
 
         if(start_.isEmpty()) {
-            alert("No Start Date entered");
+            alert("Error","No Start Date entered");
             return;
         }
 
         if(end_.isEmpty()) {
-            alert("No End Date entered");
+            alert("Error","No End Date entered");
             return;
         }
 
@@ -82,15 +89,6 @@ public class AddCourseActivity extends AppCompatActivity {
         dao.addCourse(course);
 
         Log.d("AddCourseActivity", "course added to user");
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddCourseActivity.this);
-        builder.setTitle("Success!");
-        builder.setPositiveButton("Okay", (dialogInterface, i) -> {
-            dialogInterface.dismiss();
-            finish();
-        });
-        AlertDialog alert = builder.create();
-        alert.setMessage(String.format("Course added: %s %s", course.getTitle(), course.getDescription()));
-        alert.show();
+        alert("Success!", String.format("Course added: %s %s", course.getTitle(), course.getDescription()));
     }
 }

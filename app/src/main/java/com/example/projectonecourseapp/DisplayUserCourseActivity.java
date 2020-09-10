@@ -47,6 +47,8 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         message.setText(String.format("Welcome, %s", user.getUserName()));
 
         ListView lv = findViewById(R.id.list_view);
+        TextView empty_text = findViewById(R.id.empty);
+        lv.setEmptyView(empty_text);
 
         Button add_course_button = findViewById(R.id.add_course_button);
         add_course_button.setOnClickListener(v -> {
