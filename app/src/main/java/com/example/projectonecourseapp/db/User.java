@@ -19,6 +19,7 @@ public class User
     private String mFirstName;
     private String mLastName;
 
+    @Ignore
     public User() {}
 
     @Ignore

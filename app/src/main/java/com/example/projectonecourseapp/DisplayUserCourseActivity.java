@@ -44,7 +44,12 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         User user = dao.getUserByUsername(MainActivity.username);
 
         TextView message = findViewById(R.id.message);
-        message.setText(String.format("Welcome, %s", user.getUserName()));
+
+        if(user.getFirstName() != null) {
+            message.setText(String.format("Welcome, %s", user.getFirstName()));
+        } else {
+            message.setText(String.format("Welcome, %s", user.getUserName()));
+        }
 
         ListView lv = findViewById(R.id.list_view);
         TextView empty_text = findViewById(R.id.empty);
@@ -57,11 +62,18 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
             finish();
         });
 
+        Button edit_user_button = findViewById(R.id.edit_user);
+        edit_user_button.setOnClickListener(v -> {
+            Intent intent = new Intent(DisplayUserCourseActivity.this, EditUserActivity.class);
+            startActivity(intent);
+            // ?
+            finish();
+        });
+
         // load the course data
         courses = dao.getCoursesTaken(MainActivity.username);
 
         if(courses.isEmpty()) {
-            // display something in view to notify user no courses taking.
             Log.d("DisplayUserCourseActivity", "no courses this username is taking");
         } else {
             Log.d("DisplayCourseActivity", String.format("User is taking %d courses", courses.size()));

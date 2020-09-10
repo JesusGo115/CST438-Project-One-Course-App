@@ -35,9 +35,13 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     public void createAccount() {
         TextView message = findViewById(R.id.message);
+        EditText first_name = findViewById(R.id.first_name);
+        EditText last_name = findViewById(R.id.last_name);
         EditText username = findViewById(R.id.username);
         EditText password = findViewById(R.id.password);
 
+        String f_name_ = first_name.getText().toString();
+        String l_name_ = last_name.getText().toString();
         String username_ = username.getText().toString();
         String password_ = password.getText().toString();
 
@@ -46,9 +50,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         // check if user exists
         User user = AppDatabase.getAppDatabase(CreateAccountActivity.this).
                 getCourseDao().getUserByUsername(username_);
+
         if(user == null) {
             // add new user
-            User new_user = new User(username_, password_);
+            User new_user = new User(username_, password_, f_name_, l_name_);
             CourseAppDAO dao = AppDatabase.getAppDatabase(CreateAccountActivity.this).getCourseDao();
             dao.addUser(new_user);
             alert("Success!", "Account successfully created.");

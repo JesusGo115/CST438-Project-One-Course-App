@@ -28,4 +28,9 @@
     <string name="course_name_hint">Software Engineering</string>
     <string name="welcome">\"Welcome, \"</string>
     <string name="no_courses">No Courses added yet</string>
+    <string name="edit_user">Edit your profile</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="edit_profile">What would you like to edit?</string>
+    <string name="edit">Edit</string>
 </resources>
