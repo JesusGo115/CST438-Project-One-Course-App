@@ -44,16 +44,13 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         User user = dao.getUserByUsername(MainActivity.username);
 
         TextView message = findViewById(R.id.message);
+        message.setText("");
 
         if(user.getFirstName() != null) {
-            message.setText(String.format("Welcome, %s", user.getFirstName()));
+            message.setText(String.format("Welcome, %s\n", user.getFirstName()));
         } else {
-            message.setText(String.format("Welcome, %s", user.getUserName()));
+            message.setText(String.format("Welcome, %s\n", user.getUserName()));
         }
-
-        ListView lv = findViewById(R.id.list_view);
-        TextView empty_text = findViewById(R.id.empty);
-        lv.setEmptyView(empty_text);
 
         Button add_course_button = findViewById(R.id.add_course_button);
         add_course_button.setOnClickListener(v -> {
@@ -66,7 +63,6 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         edit_user_button.setOnClickListener(v -> {
             Intent intent = new Intent(DisplayUserCourseActivity.this, EditUserActivity.class);
             startActivity(intent);
-            // ?
             finish();
         });
 
@@ -75,8 +71,9 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
 
         if(courses.isEmpty()) {
             Log.d("DisplayUserCourseActivity", "no courses this username is taking");
+            message.append("No Courses added yet");
         } else {
-            Log.d("DisplayCourseActivity", String.format("User is taking %d courses", courses.size()));
+            Log.d("DisplayUserCourseActivity", String.valueOf(courses.size()));
             updateList();
         }
     }
@@ -86,6 +83,7 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         ListView lv = findViewById(R.id.list_view);
         List<String> rows = new ArrayList<>();
         for(Course course: courses) {
+            // switch this up...
             rows.add(String.format("Course Name: %s\nCourse ID: %s\nInstructor: %s" +
                     "\nStart Date: %s\nEnd Date: %s", course.getDescription(), course.getTitle(),
                     course.getInstructor(), course.getStartDate(), course.getEndDate()));
@@ -94,6 +92,19 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
                 (instance, android.R.layout.simple_list_item_1, rows);
         lv.setAdapter(arrayAdapter);
+        lv.setOnItemClickListener((parent, view, i, l) -> {
+            // get item from ListView
+            String selected_item = (String) parent.getItemAtPosition(i);
+            // get course
+            Log.d("DisplayUserActivity", selected_item);
+
+
+
+
+
+        });
+
+
     }
 
 

@@ -44,7 +44,6 @@ public class EditUserActivity extends AppCompatActivity {
     }
 
     public void checkInputs() {
-        TextView message = findViewById(R.id.message);
         EditText first_name = findViewById(R.id.edit_first_name);
         EditText last_name = findViewById(R.id.edit_last_name);
         EditText username = findViewById(R.id.edit_username);

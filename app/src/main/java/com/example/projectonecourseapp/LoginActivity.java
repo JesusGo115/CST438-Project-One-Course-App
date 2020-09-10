@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         final EditText username = findViewById(R.id.username);
         final EditText password = findViewById(R.id.password);
 
@@ -34,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
             TextView message = findViewById(R.id.message);
 
             if (username.getText().toString().equals("") || password.getText().toString().equals("")) {
-                // error empty, implement
                 message.setText(R.string.missing_user_pass);
                 return;
             }
