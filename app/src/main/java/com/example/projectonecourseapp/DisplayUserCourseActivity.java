@@ -68,12 +68,9 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
 
         // load the course data
         courses = dao.getCoursesTaken(MainActivity.username);
-
         if(courses.isEmpty()) {
-            Log.d("DisplayUserCourseActivity", "no courses this username is taking");
             message.append("No Courses added yet");
         } else {
-            Log.d("DisplayUserCourseActivity", String.valueOf(courses.size()));
             updateList();
         }
     }
@@ -83,9 +80,8 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         ListView lv = findViewById(R.id.list_view);
         List<String> rows = new ArrayList<>();
         for(Course course: courses) {
-            // switch this up...
-            rows.add(String.format("Course Name: %s\nCourse ID: %s\nInstructor: %s" +
-                    "\nStart Date: %s\nEnd Date: %s", course.getDescription(), course.getTitle(),
+            rows.add(String.format("Course: %s %s\nInstructor: %s" +
+                    "\nStart Date: %s\nEnd Date: %s", course.getTitle(), course.getDescription(),
                     course.getInstructor(), course.getStartDate(), course.getEndDate()));
         }
 
@@ -96,16 +92,16 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
             // get item from ListView
             String selected_item = (String) parent.getItemAtPosition(i);
             // get course
-            Log.d("DisplayUserActivity", selected_item);
+            String course_title = selected_item.split(" ")[1];
 
+            CourseAppDAO dao = AppDatabase.getAppDatabase(this).getCourseDao();
+            course = dao.getCourseByTitle(course_title);
 
-
-
-
+            if(course != null) {
+                Intent intent = new Intent(DisplayUserCourseActivity.this, CourseActivity.class);
+                intent.putExtra("course", course.getTitle());
+                startActivity(intent);
+            }
         });
-
-
     }
-
-
 }

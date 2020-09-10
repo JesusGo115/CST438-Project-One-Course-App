@@ -54,6 +54,9 @@ public interface CourseAppDAO
     @Query("SELECT * FROM " + AppDatabase.COURSE_TABLE + " WHERE mTitle = :title")
     List<Course> getAllCoursesByTitle(String title);
 
+    @Query("select * from " + AppDatabase.COURSE_TABLE + " where mTitle = :title")
+    Course getCourseByTitle(String title);
+
     @Query("SELECT * FROM " + AppDatabase.COURSE_TABLE + " WHERE mCourseId = :courseId")
     List<Course> getCourseByCourseId(int courseId);
 

@@ -33,4 +33,6 @@
     <string name="first_name">First Name</string>
     <string name="edit_profile">What would you like to edit?</string>
     <string name="edit">Edit</string>
+    <string name="add_assignment">Add Assignment</string>
+    <string name="delete_assignment">Delete Assignment</string>
 </resources>
