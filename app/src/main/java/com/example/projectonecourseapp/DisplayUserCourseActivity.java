@@ -29,6 +29,9 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
 
     public static DisplayUserCourseActivity instance = null;
 
+    List<Course> courses = new ArrayList<>();
+    Course course = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         instance = this;
@@ -43,32 +46,41 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         TextView message = findViewById(R.id.message);
         message.setText(String.format("Welcome, %s", user.getUserName()));
 
+        ListView lv = findViewById(R.id.list_view);
+
         Button add_course_button = findViewById(R.id.add_course_button);
         add_course_button.setOnClickListener(v -> {
             Intent intent = new Intent(DisplayUserCourseActivity.this, AddCourseActivity.class);
-            DisplayUserCourseActivity.this.startActivity(intent);
+            startActivity(intent);
+            finish();
         });
 
         // load the course data
-        List<Course> courses = dao.getCoursesTaken(MainActivity.username);
+        courses = dao.getCoursesTaken(MainActivity.username);
 
         if(courses.isEmpty()) {
             // display something in view to notify user no courses taking.
             Log.d("DisplayUserCourseActivity", "no courses this username is taking");
         } else {
             Log.d("DisplayCourseActivity", String.format("User is taking %d courses", courses.size()));
-
-            // Display courses list view?
-            /*
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
-                    (this, android.R.layout.simple_list_item_1, new ArrayList<>());
-            ListView lv = findViewById(R.id.list_view);
-            lv.setAdapter(arrayAdapter);
-
-            lv.setOnItemClickListener((parent, view, position, id) -> {
-                String selectedItem = (String) parent.getItemAtPosition(position);
-
-            });*/
+            updateList();
         }
     }
+
+    // update course list
+    public void updateList() {
+        ListView lv = findViewById(R.id.list_view);
+        List<String> rows = new ArrayList<>();
+        for(Course course: courses) {
+            rows.add(String.format("Course Name: %s\nCourse ID: %s\nInstructor: %s" +
+                    "\nStart Date: %s\nEnd Date: %s", course.getDescription(), course.getTitle(),
+                    course.getInstructor(), course.getStartDate(), course.getEndDate()));
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
+                (instance, android.R.layout.simple_list_item_1, rows);
+        lv.setAdapter(arrayAdapter);
+    }
+
+
 }

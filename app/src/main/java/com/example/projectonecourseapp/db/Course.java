@@ -17,7 +17,7 @@ public class Course
     private String mStartDate;
     private String mEndDate;
 
-    // username of student to display at the landing page
+    // display courses taken by this username at the landing page
     @NonNull
     private String username;
 

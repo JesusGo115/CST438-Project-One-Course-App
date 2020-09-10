@@ -5,7 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -56,7 +56,14 @@ public class LoginActivity extends AppCompatActivity {
                 MainActivity.username = username_;
                 Intent intent = new Intent(LoginActivity.this, DisplayUserCourseActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("LoginActivity", "Login canceled");
+        finish();
     }
 }
