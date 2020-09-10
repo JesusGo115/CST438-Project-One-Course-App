@@ -19,7 +19,7 @@ public interface CourseAppDAO
     User login(String username, String password);
 
     @Update
-    void updateUser(User...users);
+    void updateUser(User user);
 
     @Delete
     void deleteUser(User user);
