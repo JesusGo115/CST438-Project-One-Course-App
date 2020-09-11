@@ -106,7 +106,7 @@ public interface CourseAppDAO
     Assignment getAssignmentByCategoryId(int categoryId);
 
     @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE + " WHERE mCourseId = :courseId")
-    Assignment getAssignmentByCourseId(int courseId);
+    Assignment getAssignmentByCourseId(String courseId);
 
     //********************************************
 

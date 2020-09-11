@@ -16,7 +16,7 @@ public class Assignment
     private String mAssignedDate;
     private String mDueDate;
     private int mCategoryId;
-    private int mCourseId;
+    private String mCourseId;
 
     public Assignment(String details, String maxScore, String earnedScore, String assignedDate, String dueDate) {
         this.mDetails = details;
@@ -82,11 +82,11 @@ public class Assignment
         mCategoryId = categoryId;
     }
 
-    public int getCourseId() {
+    public String getCourseId() {
         return mCourseId;
     }
 
-    public void setCourseId(int courseId) {
+    public void setCourseId(String courseId) {
         mCourseId = courseId;
     }
 
