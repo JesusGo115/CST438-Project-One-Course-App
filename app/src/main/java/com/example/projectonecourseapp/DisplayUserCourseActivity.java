@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.projectonecourseapp.db.AppDatabase;
+import com.example.projectonecourseapp.db.Assignment;
 import com.example.projectonecourseapp.db.Course;
 import com.example.projectonecourseapp.db.CourseAppDAO;
 import com.example.projectonecourseapp.db.User;
@@ -21,8 +22,10 @@ import java.util.List;
 public class DisplayUserCourseActivity extends AppCompatActivity {
 
     public static DisplayUserCourseActivity instance = null;
+    public static String username = null;
 
     List<Course> courses = new ArrayList<>();
+    List<Assignment> assignment_grades = new ArrayList<>();
     Course course = null;
     Integer course_grade = null;
 
@@ -35,7 +38,8 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_user_course);
 
         CourseAppDAO dao = AppDatabase.getAppDatabase(DisplayUserCourseActivity.this).getCourseDao();
-        User user = dao.getUserByUsername(MainActivity.username);
+        username = MainActivity.username;
+        User user = dao.getUserByUsername(username);
 
         TextView message = findViewById(R.id.message);
         message.setText("");
@@ -80,8 +84,13 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
     public void updateList() {
         ListView lv = findViewById(R.id.list_view);
         List<String> rows = new ArrayList<>();
-        String grade_temp = "";
+        CourseAppDAO dao = AppDatabase.getAppDatabase(this).getCourseDao();
+        String grade_temp;
         for(Course course: courses) {
+            // get overall assignment grades from course
+            assignment_grades = dao.getAssignmentByCourseId(course.getTitle());
+            Log.d("DisplayUserActivity", "# of assignments : " + assignment_grades.size());
+
             if(course_grade == null) {
                 grade_temp = "N/A";
             } else {
@@ -101,15 +110,21 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
             String selected_item = (String) parent.getItemAtPosition(i);
             // get course
             String course_title = selected_item.split(" ")[1];
-
-            CourseAppDAO dao = AppDatabase.getAppDatabase(this).getCourseDao();
             course = dao.getCourseByTitle(course_title);
 
             if(course != null) {
                 Intent intent = new Intent(DisplayUserCourseActivity.this, DisplayCourseActivity.class);
                 intent.putExtra("course", course.getTitle());
+                intent.putExtra("username", username);
                 startActivity(intent);
+                finish();
             }
         });
     }
+
+//    public Integer getAverage(List<Assignment> assignments) {
+//        Integer grades;
+//
+//        return grade;
+//    }
 }

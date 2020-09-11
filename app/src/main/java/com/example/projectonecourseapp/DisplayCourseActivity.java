@@ -30,12 +30,14 @@ public class DisplayCourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         instance = this;
 
+        Log.d("DisplayCourseActivity", "onCreate called");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_course);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         String course_title = getIntent().getStringExtra("course");
+        DisplayUserCourseActivity.username = getIntent().getStringExtra("username");
         assert course_title != null;
 
         TextView message = findViewById(R.id.message);
@@ -46,6 +48,7 @@ public class DisplayCourseActivity extends AppCompatActivity {
             Intent intent = new Intent(DisplayCourseActivity.this, AddAssignmentActivity.class);
             intent.putExtra("course", course_title);
             startActivity(intent);
+            finish();
         });
 
         Button delete_assignment = findViewById(R.id.delete_assignment_button);

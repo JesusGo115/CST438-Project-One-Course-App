@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class Assignment
 {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int mAssignmentId;
 
     private String mDetails;
