@@ -48,6 +48,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".DeleteCourseActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".DisplayUserCourseActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">

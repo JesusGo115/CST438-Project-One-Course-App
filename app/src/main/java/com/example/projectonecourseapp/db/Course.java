@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.List;
+
 @Entity(tableName = AppDatabase.COURSE_TABLE)
 public class Course
 {

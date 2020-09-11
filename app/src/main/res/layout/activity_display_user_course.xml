@@ -41,6 +41,12 @@
         android:text="@string/add_course" />
 
     <Button
+        android:id="@+id/delette_course_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_course"/>
+
+    <Button
         android:id="@+id/edit_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

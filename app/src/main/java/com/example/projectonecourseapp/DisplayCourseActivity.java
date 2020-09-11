@@ -70,6 +70,7 @@ public class DisplayCourseActivity extends AppCompatActivity {
         ListView lv = findViewById(R.id.list_view);
         List<String> rows = new ArrayList<>();
         for(Assignment assignment: assignments) {
+            // temporary display
             rows.add(String.format("%s %s %s %s/%s", assignment.getDetails(),
                     assignment.getAssignedDate(), assignment.getDueDate(), assignment.getEarnedScore(), assignment.getMaxScore()));
         }

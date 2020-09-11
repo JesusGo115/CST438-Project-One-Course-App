@@ -16,6 +16,7 @@
     <string name="incorrect_password">Incorrect password, try again.</string>
     <string name="missing_user_pass">Please input username or password</string>
     <string name="add_course">Add Course</string>
+    <string name="delete_course">Delete Course</string>
     <string name="enter_course_id">Enter Course ID</string>
     <string name="enter_instructor_name">Enter Instructor Name</string>
     <string name="course_hint">CST-438</string>

@@ -24,6 +24,7 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
 
     List<Course> courses = new ArrayList<>();
     Course course = null;
+    Integer course_grade = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,13 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
             finish();
         });
 
+        Button delete_course_button = findViewById(R.id.delette_course_button);
+        delete_course_button.setOnClickListener(v -> {
+            Intent intent = new Intent(DisplayUserCourseActivity.this, DeleteCourseActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
         Button edit_user_button = findViewById(R.id.edit_user);
         edit_user_button.setOnClickListener(v -> {
             Intent intent = new Intent(DisplayUserCourseActivity.this, EditUserActivity.class);
@@ -72,10 +80,17 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
     public void updateList() {
         ListView lv = findViewById(R.id.list_view);
         List<String> rows = new ArrayList<>();
+        String grade_temp = "";
         for(Course course: courses) {
+            if(course_grade == null) {
+                grade_temp = "N/A";
+            } else {
+                grade_temp = String.valueOf(course_grade);
+                grade_temp += "%";
+            }
             rows.add(String.format("Course: %s %s\nInstructor: %s" +
-                    "\nStart Date: %s\nEnd Date: %s", course.getTitle(), course.getDescription(),
-                    course.getInstructor(), course.getStartDate(), course.getEndDate()));
+                    "\nStart Date: %s\nEnd Date: %s\nOverall Score: %s", course.getTitle(), course.getDescription(),
+                    course.getInstructor(), course.getStartDate(), course.getEndDate(), grade_temp));
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
