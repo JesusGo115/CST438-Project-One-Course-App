@@ -27,7 +27,7 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
     List<Course> courses = new ArrayList<>();
     List<Assignment> assignment_grades = new ArrayList<>();
     Course course = null;
-    Integer course_grade = null;
+    Double course_grade = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +89,14 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         for(Course course: courses) {
             // get overall assignment grades from course
             assignment_grades = dao.getAssignmentByCourseId(course.getTitle());
-            Log.d("DisplayUserActivity", "# of assignments : " + assignment_grades.size());
+            if(assignment_grades.size() != 0) {
+                course_grade = getAverage(assignment_grades);
+            }
 
             if(course_grade == null) {
                 grade_temp = "N/A";
             } else {
-                grade_temp = String.valueOf(course_grade);
+                grade_temp = String.format("%.2f", course_grade);
                 grade_temp += "%";
             }
             rows.add(String.format("Course: %s %s\nInstructor: %s" +
@@ -122,9 +124,16 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         });
     }
 
-//    public Integer getAverage(List<Assignment> assignments) {
-//        Integer grades;
-//
-//        return grade;
-//    }
+    public double getAverage(List<Assignment> assignments) {
+        double grades = 0;
+        double earned_temp;
+        double max_temp;
+        for(Assignment assignment: assignments) {
+            earned_temp = Integer.parseInt(String.valueOf(assignment.getEarnedScore()));
+            max_temp = Integer.parseInt(String.valueOf(assignment.getMaxScore()));
+            grades += (earned_temp / max_temp);
+        }
+
+        return (grades / assignments.size()) * 100;
+    }
 }

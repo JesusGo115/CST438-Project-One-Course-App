@@ -59,9 +59,11 @@ public class AddAssignmentActivity extends AppCompatActivity {
         }
         if(assigned_date_.isEmpty()) {
             alert("Error", "Enter when your assignment was assigned.");
+            return;
         }
         if(due_date_.isEmpty()) {
             alert("Error", "Enter the assignment's due date.");
+            return;
         }
 
         String course_id = getIntent().getStringExtra("course");
