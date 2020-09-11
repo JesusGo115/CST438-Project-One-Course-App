@@ -35,4 +35,14 @@
     <string name="edit">Edit</string>
     <string name="add_assignment">Add Assignment</string>
     <string name="delete_assignment">Delete Assignment</string>
+    <string name="assignment_details">Enter Assignment Details</string>
+    <string name="assignment_max_score">Enter a Max Score</string>
+    <string name="details_hint">What the assignment was about…</string>
+    <string name="max_score_hint">100</string>
+    <string name="assignment_earned_score">Enter Earned Score</string>
+    <string name="earned_score_hint">50</string>
+    <string name="assigned_date">Assigned Date</string>
+    <string name="assigned_date_hint">8/24/20</string>
+    <string name="due_date">Due Date</string>
+    <string name="due_date_hint">9/18/20</string>
 </resources>

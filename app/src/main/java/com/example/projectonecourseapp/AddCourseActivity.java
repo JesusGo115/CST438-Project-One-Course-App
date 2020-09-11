@@ -2,6 +2,7 @@ package com.example.projectonecourseapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,8 @@ public class AddCourseActivity extends AppCompatActivity {
         Log.d("AddCourseActivity", "onCreate called");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Button submit_button = findViewById(R.id.submit);
         submit_button.setOnClickListener(v -> checkInputs());

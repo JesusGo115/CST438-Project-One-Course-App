@@ -3,9 +3,12 @@ package com.example.projectonecourseapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.projectonecourseapp.db.AppDatabase;
@@ -32,11 +35,17 @@ public class DisplayCourseActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        String course_title = getIntent().getStringExtra("course");
+        assert course_title != null;
+
         TextView message = findViewById(R.id.message);
+        message.setText("");
 
         Button add_assignment = findViewById(R.id.add_assignment_button);
         add_assignment.setOnClickListener(view -> {
-
+            Intent intent = new Intent(DisplayCourseActivity.this, AddAssignmentActivity.class);
+            intent.putExtra("course", course_title);
+            startActivity(intent);
         });
 
         Button delete_assignment = findViewById(R.id.delete_assignment_button);
@@ -44,24 +53,32 @@ public class DisplayCourseActivity extends AppCompatActivity {
 
         });
 
-
-
-
-
-        String course_title = getIntent().getStringExtra("course");
-
         CourseAppDAO dao = AppDatabase.getAppDatabase(DisplayCourseActivity.this).getCourseDao();
-
-        assert course_title != null;
-        Log.d("CourseActivity", course_title);
-
         course = dao.getCourseByTitle(course_title);
-        message.setText(String.format("%s %s", course.getTitle(), course.getDescription()));
+        message.setText(String.format("%s %s\n", course.getTitle(), course.getDescription()));
 
         // get assignments
+        assignments = dao.getAssignmentByCourseId(course_title);
+        if(assignments.isEmpty()) {
+            message.append("No assignments added yet");
+        } else {
+            updateList();
+        }
+    }
 
+    public void updateList() {
+        ListView lv = findViewById(R.id.list_view);
+        List<String> rows = new ArrayList<>();
+        for(Assignment assignment: assignments) {
+            rows.add(String.format("%s %s %s %s/%s", assignment.getDetails(),
+                    assignment.getAssignedDate(), assignment.getDueDate(), assignment.getEarnedScore(), assignment.getMaxScore()));
+        }
 
-
-
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
+                (this, android.R.layout.simple_list_item_1, rows);
+        lv.setAdapter(arrayAdapter);
+        lv.setOnItemClickListener((parent, view, i, l) -> {
+            // not sure we need this
+        });
     }
 }

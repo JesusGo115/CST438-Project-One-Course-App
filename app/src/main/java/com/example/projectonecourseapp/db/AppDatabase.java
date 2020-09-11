@@ -12,7 +12,7 @@ import androidx.room.TypeConverters;
 
 import java.util.List;
 
-@Database(entities = {User.class, Grade.class, GradeCategory.class, Enrollment.class, Course.class, Assignment.class}, version = 2)
+@Database(entities = {User.class, Grade.class, GradeCategory.class, Enrollment.class, Course.class, Assignment.class}, version = 3)
 @TypeConverters(DateTypeConverter.class)
 public abstract class AppDatabase extends RoomDatabase
 {
