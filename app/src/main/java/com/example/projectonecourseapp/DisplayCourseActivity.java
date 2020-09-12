@@ -27,6 +27,7 @@ public class DisplayCourseActivity extends AppCompatActivity {
 
     public static DisplayCourseActivity instance = null;
 
+    Assignment assignment = null;
     Course course = null;
     List<Assignment> assignments = new ArrayList<>();
 
@@ -56,9 +57,7 @@ public class DisplayCourseActivity extends AppCompatActivity {
         });
 
         Button delete_assignment = findViewById(R.id.delete_assignment_button);
-        delete_assignment.setOnClickListener(view -> {
-            message.setText(R.string.delete_assignment_instruction);
-        });
+        delete_assignment.setOnClickListener(view -> message.setText(R.string.delete_assignment_instruction));
 
         CourseAppDAO dao = AppDatabase.getAppDatabase(DisplayCourseActivity.this).getCourseDao();
         course = dao.getCourseByTitle(course_title);
@@ -76,10 +75,12 @@ public class DisplayCourseActivity extends AppCompatActivity {
     public void updateList() {
         ListView lv = findViewById(R.id.list_view);
         List<String> rows = new ArrayList<>();
+        CourseAppDAO dao = AppDatabase.getAppDatabase(this).getCourseDao();
+
         for(Assignment assignment: assignments) {
             // temporary display
-            rows.add(String.format("%s %s %s %s/%s", assignment.getDetails(),
-                    assignment.getAssignedDate(), assignment.getDueDate(), assignment.getEarnedScore(), assignment.getMaxScore()));
+            rows.add(String.format("%s\nAssigned: %s\nDue: %s \nScore: %s/%s\nCategory: %s", assignment.getDetails(),
+                    assignment.getAssignedDate(), assignment.getDueDate(), assignment.getEarnedScore(), assignment.getMaxScore(), assignment.getCategoryId()));
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
@@ -88,58 +89,111 @@ public class DisplayCourseActivity extends AppCompatActivity {
 
         // users can edit assignment
         lv.setOnItemClickListener((parent, view, i, l) -> {
-            // new activity,
-            editAssignment();
+            // get item position
+            String selected_item = (String) parent.getItemAtPosition(i);
+            // get assignment
+            String selected_temp = selected_item.split("\n")[0];
+            editAssignment(selected_temp);
         });
 
-//        lv.setOnItemLongClickListener((parent, view, i, l) -> {
-//            // make some alert here.
-//            deleteAssignment();
-//
-//        });
+        lv.setOnItemLongClickListener((parent, view, i, l) -> {
+            // make some alert here.
+            Log.d("DisplayCourseActivity", "onItemLongClick");
+            deleteAssignment();
+            return true;
+        });
     }
 
-    public void editAssignment() {
+    public void editAssignment(String assignment_details) {
 
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        // text view?
-        final EditText description = new EditText(this);
-        description.setHint("Description about assignment.");
-        layout.addView(description);
-        // another text view
-        final EditText max_score = new EditText(this);
-        max_score.setHint("Enter your max score.");
-        layout.addView(max_score);
+        CourseAppDAO dao = AppDatabase.getAppDatabase(this).getCourseDao();
+        assignment = dao.getAssignmentByDetails(assignment_details);
+        if(assignment != null) {
 
-        final EditText earned_score = new EditText(this);
-        earned_score.setHint("Enter your earned score.");
-        layout.addView(earned_score);
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.VERTICAL);
 
-        final EditText assigned_date = new EditText(this);
-        assigned_date.setHint("Enter assigned date.");
-        layout.addView(assigned_date);
+            final EditText description = new EditText(this);
+            description.setHint("Description about assignment");
+            layout.addView(description);
 
-        final EditText due_date = new EditText(this);
-        due_date.setHint("Enter due date");
-        layout.addView(due_date);
+            final EditText max_score = new EditText(this);
+            max_score.setHint("Enter max score");
+            layout.addView(max_score);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle("Edit Assignment")
-                .setPositiveButton("Okay", (dialog, which) -> {
+            final EditText earned_score = new EditText(this);
+            earned_score.setHint("Enter your earned score");
+            layout.addView(earned_score);
 
-                })
-                .setNegativeButton("Cancel", (dialog, which) -> {
+            final EditText assigned_date = new EditText(this);
+            assigned_date.setHint("Enter assigned date");
+            layout.addView(assigned_date);
 
-                })
-                .setOnCancelListener(dialog -> {
-                    finish();
-                })
-                .setView(layout);
-        builder.show();
+            final EditText due_date = new EditText(this);
+            due_date.setHint("Enter due date");
+            layout.addView(due_date);
+
+            final EditText category_id = new EditText(this);
+            category_id.setHint("HW/Quiz/Project/Exam");
+            layout.addView(category_id);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                    .setTitle("Edit Assignment")
+                    .setPositiveButton("Okay", (dialog, which) -> {
+                        String description_ = description.getText().toString();
+                        String max_score_ = max_score.getText().toString();
+                        String earned_score_ = earned_score.getText().toString();
+                        String assigned_date_ = assigned_date.getText().toString();
+                        String due_date_ = due_date.getText().toString();
+                        String category_id_ = category_id.getText().toString();
+
+                        if(description_.isEmpty() || max_score_.isEmpty() || earned_score_.isEmpty()
+                                || assigned_date_.isEmpty() || due_date_.isEmpty() || category_id_.isEmpty()) {
+                            alert("Error", "Please don't leave any fields blank.");
+                        }
+
+                        assignment.setDetails(description_);
+                        assignment.setMaxScore(max_score_);
+                        assignment.setEarnedScore(earned_score_);
+                        assignment.setAssignedDate(assigned_date_);
+                        assignment.setDueDate(due_date_);
+                        assignment.setCategoryId(category_id_);
+                        dao.updateAssignment(assignment);
+
+                        alert("Success!", "You have updated your assignment.");
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> alert("Edit Assignment", "No changes were made."))
+                    .setOnCancelListener(dialog -> Log.d("DisplayCourseActivity", "No changes made"))
+                    .setView(layout);
+            builder.show();
+
+        } else {
+            // if somehow Assignment is null, exit
+            alert("Error!", "Assignment does not exist!");
+            finish();
+        }
+
     }
 
     public void deleteAssignment() {
 
     }
+
+    public void alert(String title, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setPositiveButton("Okay", (dialogInterface, i) -> {
+            if(title.equals("Success!")) {
+                finish();
+            } else {
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.setMessage(message);
+        dialog.show();
+    }
+
+
 }

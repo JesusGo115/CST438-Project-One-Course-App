@@ -20,13 +20,14 @@ public class Assignment
 
     public Assignment() {}
 
-    public Assignment(String details, String maxScore, String earnedScore, String assignedDate, String dueDate, String course_id) {
+    public Assignment(String details, String maxScore, String earnedScore, String assignedDate, String dueDate, String course_id, String category_id) {
         this.mDetails = details;
         this.mMaxScore = maxScore;
         this.mEarnedScore = earnedScore;
         this.mAssignedDate = assignedDate;
         this.mDueDate = dueDate;
         this.mCourseId = course_id;
+        this.mCategoryId = category_id;
     }
 
     public int getAssignmentId() {

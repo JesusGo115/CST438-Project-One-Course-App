@@ -48,5 +48,5 @@
     <string name="due_date_hint">9/18/20</string>
     <string name="delete_assignment_instruction">Press and hold on an assignment to delete</string>
     <string name="assignment_category">Enter Assignment Category</string>
-    <string name="assignment_category_hint">HW / Quiz / Exam</string>
+    <string name="assignment_category_hint">HW / Quiz / Project / Exam</string>
 </resources>

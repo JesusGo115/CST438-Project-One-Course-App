@@ -75,7 +75,7 @@ public class AddAssignmentActivity extends AppCompatActivity {
         String course_id = getIntent().getStringExtra("course");
 
         CourseAppDAO dao = AppDatabase.getAppDatabase(AddAssignmentActivity.this).getCourseDao();
-        Assignment assignment = new Assignment(assignment_details_, max_score_, earned_score_, assigned_date_, due_date_, course_id);
+        Assignment assignment = new Assignment(assignment_details_, max_score_, earned_score_, assigned_date_, due_date_, course_id, category_);
         dao.addAssignment(assignment);
         alert("Success!", "You have added a new assignment.");
     }

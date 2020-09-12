@@ -108,6 +108,9 @@ public interface CourseAppDAO
     @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE + " WHERE mCourseId = :courseId")
     List<Assignment> getAssignmentByCourseId(String courseId);
 
+    @Query("select * from " + AppDatabase.ASSIGNMENT_TABLE + " where mDetails = :details")
+    Assignment getAssignmentByDetails(String details);
+
     //********************************************
 
     //Grade
