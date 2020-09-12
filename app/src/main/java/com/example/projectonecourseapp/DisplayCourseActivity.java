@@ -58,7 +58,8 @@ public class DisplayCourseActivity extends AppCompatActivity {
         });
 
         Button delete_assignment = findViewById(R.id.delete_assignment_button);
-        delete_assignment.setOnClickListener(view -> alert("Instruction", "Press and hold on assignment to delete"));
+        delete_assignment.setOnClickListener(view -> alert("Instructions",
+                "Tap on assignment to edit.\nPress and hold on assignment to delete."));
 
         CourseAppDAO dao = AppDatabase.getAppDatabase(DisplayCourseActivity.this).getCourseDao();
         course = dao.getCourseByTitle(course_title);
@@ -107,6 +108,7 @@ public class DisplayCourseActivity extends AppCompatActivity {
 
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setPadding(55, 5, 15, 5);
 
             final EditText description = new EditText(this);
             description.setHint("Description about assignment");
@@ -166,7 +168,8 @@ public class DisplayCourseActivity extends AppCompatActivity {
                     .setOnCancelListener(dialog ->
                             Log.d("DisplayCourseActivity", "No changes made"))
                     .setView(layout);
-            builder.show();
+            AlertDialog alert = builder.create();
+            alert.show();
 
         } else {
             // if somehow Assignment is null, exit
