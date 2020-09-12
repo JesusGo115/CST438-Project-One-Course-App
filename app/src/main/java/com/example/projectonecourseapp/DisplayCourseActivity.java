@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -57,7 +58,7 @@ public class DisplayCourseActivity extends AppCompatActivity {
         });
 
         Button delete_assignment = findViewById(R.id.delete_assignment_button);
-        delete_assignment.setOnClickListener(view -> message.setText(R.string.delete_assignment_instruction));
+        delete_assignment.setOnClickListener(view -> alert("Instruction", "Press and hold on assignment to delete"));
 
         CourseAppDAO dao = AppDatabase.getAppDatabase(DisplayCourseActivity.this).getCourseDao();
         course = dao.getCourseByTitle(course_title);
@@ -75,12 +76,9 @@ public class DisplayCourseActivity extends AppCompatActivity {
     public void updateList() {
         ListView lv = findViewById(R.id.list_view);
         List<String> rows = new ArrayList<>();
-        CourseAppDAO dao = AppDatabase.getAppDatabase(this).getCourseDao();
-
         for(Assignment assignment: assignments) {
             // temporary display
-            rows.add(String.format("%s\nAssigned: %s\nDue: %s \nScore: %s/%s\nCategory: %s", assignment.getDetails(),
-                    assignment.getAssignedDate(), assignment.getDueDate(), assignment.getEarnedScore(), assignment.getMaxScore(), assignment.getCategoryId()));
+            rows.add(getAssignmentDetails(assignment));
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
@@ -89,23 +87,20 @@ public class DisplayCourseActivity extends AppCompatActivity {
 
         // users can edit assignment
         lv.setOnItemClickListener((parent, view, i, l) -> {
-            // get item position
             String selected_item = (String) parent.getItemAtPosition(i);
-            // get assignment
             String selected_temp = selected_item.split("\n")[0];
             editAssignment(selected_temp);
         });
-
+        // delete assignments
         lv.setOnItemLongClickListener((parent, view, i, l) -> {
-            // make some alert here.
-            Log.d("DisplayCourseActivity", "onItemLongClick");
-            deleteAssignment();
+            String selected_item = (String) parent.getItemAtPosition(i);
+            String selected_temp = selected_item.split("\n")[0];
+            deleteAssignment(selected_temp);
             return true;
         });
     }
 
     public void editAssignment(String assignment_details) {
-
         CourseAppDAO dao = AppDatabase.getAppDatabase(this).getCourseDao();
         assignment = dao.getAssignmentByDetails(assignment_details);
         if(assignment != null) {
@@ -127,29 +122,33 @@ public class DisplayCourseActivity extends AppCompatActivity {
 
             final EditText assigned_date = new EditText(this);
             assigned_date.setHint("Enter assigned date");
+            assigned_date.setInputType(InputType.TYPE_CLASS_DATETIME);
             layout.addView(assigned_date);
 
             final EditText due_date = new EditText(this);
             due_date.setHint("Enter due date");
+            due_date.setInputType(InputType.TYPE_CLASS_DATETIME);
             layout.addView(due_date);
 
             final EditText category_id = new EditText(this);
             category_id.setHint("HW/Quiz/Project/Exam");
             layout.addView(category_id);
 
+            String description_ = description.getText().toString();
+            String max_score_ = max_score.getText().toString();
+            String earned_score_ = earned_score.getText().toString();
+            String assigned_date_ = assigned_date.getText().toString();
+            String due_date_ = due_date.getText().toString();
+            String category_id_ = category_id.getText().toString();
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this)
                     .setTitle("Edit Assignment")
                     .setPositiveButton("Okay", (dialog, which) -> {
-                        String description_ = description.getText().toString();
-                        String max_score_ = max_score.getText().toString();
-                        String earned_score_ = earned_score.getText().toString();
-                        String assigned_date_ = assigned_date.getText().toString();
-                        String due_date_ = due_date.getText().toString();
-                        String category_id_ = category_id.getText().toString();
 
                         if(description_.isEmpty() || max_score_.isEmpty() || earned_score_.isEmpty()
                                 || assigned_date_.isEmpty() || due_date_.isEmpty() || category_id_.isEmpty()) {
                             alert("Error", "Please don't leave any fields blank.");
+                            return;
                         }
 
                         assignment.setDetails(description_);
@@ -162,8 +161,10 @@ public class DisplayCourseActivity extends AppCompatActivity {
 
                         alert("Success!", "You have updated your assignment.");
                     })
-                    .setNegativeButton("Cancel", (dialog, which) -> alert("Edit Assignment", "No changes were made."))
-                    .setOnCancelListener(dialog -> Log.d("DisplayCourseActivity", "No changes made"))
+                    .setNegativeButton("Cancel", (dialog, which) ->
+                            alert("Edit Assignment", "No changes were made."))
+                    .setOnCancelListener(dialog ->
+                            Log.d("DisplayCourseActivity", "No changes made"))
                     .setView(layout);
             builder.show();
 
@@ -172,17 +173,35 @@ public class DisplayCourseActivity extends AppCompatActivity {
             alert("Error!", "Assignment does not exist!");
             finish();
         }
-
     }
 
-    public void deleteAssignment() {
+    public void deleteAssignment(String assignment_details) {
+        CourseAppDAO dao = AppDatabase.getAppDatabase(this).getCourseDao();
+        assignment = dao.getAssignmentByDetails(assignment_details);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Are you sure you want to delete this assignment?");
+        builder.setMessage(getAssignmentDetails(assignment));
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+           // delete assignment
+           dao.deleteAssignment(assignment);
+           alert("Success!", "Your assignment was deleted.");
+        });
+        builder.setNegativeButton("No", (dialog, which) -> {
+            alert("Assignment", "Assignment was not deleted.");
+        });
+        builder.setOnCancelListener(dialog -> {
+           Log.d("DisplayCourseActivity", "onCancelListener");
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     public void alert(String title, String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
-        builder.setPositiveButton("Okay", (dialogInterface, i) -> {
+        String button_text = "Okay";
+        builder.setPositiveButton(button_text, (dialogInterface, i) -> {
             if(title.equals("Success!")) {
                 finish();
             } else {
@@ -195,5 +214,10 @@ public class DisplayCourseActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public String getAssignmentDetails(Assignment assignment) {
+        return String.format("%s\nAssigned: %s\nDue: %s \nScore: %s/%s\nCategory: %s",
+                assignment.getDetails(), assignment.getAssignedDate(), assignment.getDueDate(),
+                assignment.getEarnedScore(), assignment.getMaxScore(), assignment.getCategoryId());
+    }
 
 }
