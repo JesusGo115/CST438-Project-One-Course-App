@@ -46,4 +46,7 @@
     <string name="assigned_date_hint">8/24/20</string>
     <string name="due_date">Due Date</string>
     <string name="due_date_hint">9/18/20</string>
+    <string name="delete_assignment_instruction">Press and hold on an assignment to delete</string>
+    <string name="assignment_category">Enter Assignment Category</string>
+    <string name="assignment_category_hint">HW / Quiz / Exam</string>
 </resources>

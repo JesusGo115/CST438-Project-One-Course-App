@@ -15,7 +15,7 @@ public class Assignment
     private String mEarnedScore;
     private String mAssignedDate;
     private String mDueDate;
-    private int mCategoryId;
+    private String mCategoryId;
     private String mCourseId;
 
     public Assignment() {}
@@ -77,11 +77,11 @@ public class Assignment
         mDueDate = dueDate;
     }
 
-    public int getCategoryId() {
+    public String getCategoryId() {
         return mCategoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(String categoryId) {
         mCategoryId = categoryId;
     }
 

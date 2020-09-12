@@ -38,12 +38,14 @@ public class AddAssignmentActivity extends AppCompatActivity {
         EditText earned_score = findViewById(R.id.assignment_earned_score);
         EditText assigned_date = findViewById(R.id.assignment_assign_date);
         EditText due_date = findViewById(R.id.assignment_due_date);
+        EditText category = findViewById(R.id.assignment_category);
 
         String assignment_details_ = assignment_details.getText().toString();
         String max_score_ = max_score.getText().toString();
         String earned_score_ = earned_score.getText().toString();
         String assigned_date_ = assigned_date.getText().toString();
         String due_date_ = due_date.getText().toString();
+        String category_ = category.getText().toString();
 
         if(assignment_details_.isEmpty()) {
             alert("Error", "Please enter assignment details.");
@@ -63,6 +65,10 @@ public class AddAssignmentActivity extends AppCompatActivity {
         }
         if(due_date_.isEmpty()) {
             alert("Error", "Enter the assignment's due date.");
+            return;
+        }
+        if(category_.isEmpty()) {
+            alert("Error", "Enter assignment category");
             return;
         }
 

@@ -1,13 +1,17 @@
 package com.example.projectonecourseapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -53,7 +57,7 @@ public class DisplayCourseActivity extends AppCompatActivity {
 
         Button delete_assignment = findViewById(R.id.delete_assignment_button);
         delete_assignment.setOnClickListener(view -> {
-
+            message.setText(R.string.delete_assignment_instruction);
         });
 
         CourseAppDAO dao = AppDatabase.getAppDatabase(DisplayCourseActivity.this).getCourseDao();
@@ -81,8 +85,61 @@ public class DisplayCourseActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
                 (this, android.R.layout.simple_list_item_1, rows);
         lv.setAdapter(arrayAdapter);
+
+        // users can edit assignment
         lv.setOnItemClickListener((parent, view, i, l) -> {
-            // not sure we need this
+            // new activity,
+            editAssignment();
         });
+
+//        lv.setOnItemLongClickListener((parent, view, i, l) -> {
+//            // make some alert here.
+//            deleteAssignment();
+//
+//        });
+    }
+
+    public void editAssignment() {
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        // text view?
+        final EditText description = new EditText(this);
+        description.setHint("Description about assignment.");
+        layout.addView(description);
+        // another text view
+        final EditText max_score = new EditText(this);
+        max_score.setHint("Enter your max score.");
+        layout.addView(max_score);
+
+        final EditText earned_score = new EditText(this);
+        earned_score.setHint("Enter your earned score.");
+        layout.addView(earned_score);
+
+        final EditText assigned_date = new EditText(this);
+        assigned_date.setHint("Enter assigned date.");
+        layout.addView(assigned_date);
+
+        final EditText due_date = new EditText(this);
+        due_date.setHint("Enter due date");
+        layout.addView(due_date);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("Edit Assignment")
+                .setPositiveButton("Okay", (dialog, which) -> {
+
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> {
+
+                })
+                .setOnCancelListener(dialog -> {
+                    finish();
+                })
+                .setView(layout);
+        builder.show();
+    }
+
+    public void deleteAssignment() {
+
     }
 }

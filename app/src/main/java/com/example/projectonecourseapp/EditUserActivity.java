@@ -73,23 +73,29 @@ public class EditUserActivity extends AppCompatActivity {
             alert("Error", "You really need a password.");
             return;
         }
-
         CourseAppDAO dao = AppDatabase.getAppDatabase(EditUserActivity.this).getCourseDao();
-        courses_taken = dao.getCoursesTaken(user.getUserName());
 
-        user.setFirstName(first_name_);
-        user.setLastName(last_name_);
-        user.setUserName(username_);
-        user.setPassword(password_);
+        // add if username already exists
+        User temp = dao.getUserByUsername(username_);
+        if(temp == null) {
+            courses_taken = dao.getCoursesTaken(user.getUserName());
+            user.setFirstName(first_name_);
+            user.setLastName(last_name_);
+            user.setUserName(username_);
+            user.setPassword(password_);
 
-        dao.updateUser(user);
+            dao.updateUser(user);
 
-        for(Course course: courses_taken) {
-            course.setUsername(user.getUserName());
-            dao.updateCourse(course);
+            for(Course course: courses_taken) {
+                course.setUsername(user.getUserName());
+                dao.updateCourse(course);
+            }
+
+            alert("Success!", "You have updated your profile!");
+        } else {
+            alert("Error", "Username is already taken, try another.");
         }
 
-        alert("Success!", "You have updated your profile!");
     }
 
     public void alert(String title, String message) {
