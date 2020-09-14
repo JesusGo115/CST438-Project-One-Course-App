@@ -57,13 +57,3 @@ public abstract class AppDatabase extends RoomDatabase
     }
 
 }
-
-//    DodoDAO mDodoDao;
-//
-//    private void getDatabase()
-//    {
-//        mDodoDao = Room.databaseBuilder(this, AppDatabase.class, AppDatabase.DB_NAME)
-//                .allowMainThreadQueries()
-//                .build()
-//                .getDodoDAO();
-//    }

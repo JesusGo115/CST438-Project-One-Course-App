@@ -4,17 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.List;
-
 @Entity(tableName = AppDatabase.COURSE_TABLE)
 public class Course
 {
 
     @PrimaryKey(autoGenerate = true)
-    private int mCourseId;
+    private int mCourseKey;
 
     private String mInstructor;
-    private String mTitle;
+    private String mCourseId;
     private String mDescription;
     private String mStartDate;
     private String mEndDate;
@@ -29,19 +27,19 @@ public class Course
 
     public Course(String course_name, String course_id, String instructor, String start_date, String end_date, String username) {
         this.mDescription = course_name;
-        this.mTitle = course_id;
+        this.mCourseId = course_id;
         this.mInstructor = instructor;
         this.mStartDate = start_date;
         this.mEndDate = end_date;
         this.username = username;
     }
 
-    public int getCourseId() {
-        return mCourseId;
+    public int getCourseKey() {
+        return mCourseKey;
     }
 
-    public void setCourseId(int courseId) {
-        mCourseId = courseId;
+    public void setCourseKey(int courseKey) {
+        mCourseKey = courseKey;
     }
 
     public String getInstructor() {
@@ -52,12 +50,12 @@ public class Course
         mInstructor = instructor;
     }
 
-    public String getTitle() {
-        return mTitle;
+    public String getCourseId() {
+        return mCourseId;
     }
 
-    public void setTitle(String title) {
-        mTitle = title;
+    public void setCourseId(String courseId) {
+        mCourseId = courseId;
     }
 
     public String getDescription() {
@@ -96,7 +94,7 @@ public class Course
     public String toString() {
         return "Course Info {" +
                 "mInstructor='" + mInstructor + '\'' +
-                ", mTitle='" + mTitle + '\'' +
+                ", mTitle='" + mCourseId + '\'' +
                 ", mDescription='" + mDescription + '\'' +
                 ", mStartDate='" + mStartDate + '\'' +
                 ", mEndDate='" + mEndDate + '\'' +

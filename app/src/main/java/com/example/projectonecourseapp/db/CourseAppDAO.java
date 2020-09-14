@@ -51,17 +51,26 @@ public interface CourseAppDAO
     @Query("SELECT * FROM " + AppDatabase.COURSE_TABLE)
     List<Course> getAllCourses();
 
-    @Query("SELECT * FROM " + AppDatabase.COURSE_TABLE + " WHERE mTitle = :title")
-    List<Course> getAllCoursesByTitle(String title);
-
-    @Query("select * from " + AppDatabase.COURSE_TABLE + " where mTitle = :title")
-    Course getCourseByTitle(String title);
-
     @Query("SELECT * FROM " + AppDatabase.COURSE_TABLE + " WHERE mCourseId = :courseId")
-    List<Course> getCourseByCourseId(int courseId);
+    List<Course> getAllCoursesByCourseId(String courseId);
+
+    @Query("select * from " + AppDatabase.COURSE_TABLE + " where mCourseId = :courseId")
+    Course getCourseByCourseId(String courseId);
+
+    @Query("select * from " + AppDatabase.COURSE_TABLE + " where mCourseId = :courseId AND mDescription = :courseName")
+    Course getCourseByCourseIdAndCourseName(String courseId, String courseName);
+
+    @Query("SELECT * FROM " + AppDatabase.COURSE_TABLE + " WHERE mCourseKey = :courseKey")
+    List<Course> getCourseByCourseKey(int courseKey);
 
     @Query("select * from " + AppDatabase.COURSE_TABLE + " where username = :username")
     List<Course> getCoursesTaken(String username);
+
+    @Query("SELECT COUNT(*) FROM " + AppDatabase.COURSE_TABLE + " WHERE mDescription = :courseName")
+    int countCourseName(String courseName);
+
+    @Query("SELECT COUNT(*) FROM " + AppDatabase.COURSE_TABLE + " WHERE mCourseId = :courseId")
+    int countCourseId(String courseId);
 
     //********************************************
 
@@ -99,6 +108,9 @@ public interface CourseAppDAO
     @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE)
     List<Assignment> getAllAssignments();
 
+    @Query("SELECT COUNT(*) FROM " + AppDatabase.ASSIGNMENT_TABLE + " WHERE mCourseId = :courseId")
+    int countAssignmentsByCourseId(String courseId);
+
     @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE + " WHERE mAssignmentId = :assignmentId")
     List<Assignment> getAssignmentByAssignmentId(int assignmentId);
 
@@ -106,7 +118,7 @@ public interface CourseAppDAO
     Assignment getAssignmentByCategoryId(String categoryId);
 
     @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE + " WHERE mCourseId = :courseId")
-    List<Assignment> getAssignmentByCourseId(String courseId);
+    List<Assignment> getAllAssignmentsByCourseId(String courseId);
 
     @Query("select * from " + AppDatabase.ASSIGNMENT_TABLE + " where mDetails = :details")
     Assignment getAssignmentByDetails(String details);

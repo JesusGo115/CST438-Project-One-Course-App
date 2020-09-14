@@ -4,7 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -42,9 +41,9 @@ public class DisplayCourseActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String course_title = getIntent().getStringExtra("course");
+        String course_Id = getIntent().getStringExtra("course");
         DisplayUserCourseActivity.username = getIntent().getStringExtra("username");
-        assert course_title != null;
+        assert course_Id != null;
 
         TextView message = findViewById(R.id.message);
         message.setText("");
@@ -52,7 +51,7 @@ public class DisplayCourseActivity extends AppCompatActivity {
         Button add_assignment = findViewById(R.id.add_assignment_button);
         add_assignment.setOnClickListener(view -> {
             Intent intent = new Intent(DisplayCourseActivity.this, AddAssignmentActivity.class);
-            intent.putExtra("course", course_title);
+            intent.putExtra("course", course_Id);
             startActivity(intent);
             finish();
         });
@@ -62,11 +61,11 @@ public class DisplayCourseActivity extends AppCompatActivity {
                 "Tap on assignment to edit.\nPress and hold on assignment to delete."));
 
         CourseAppDAO dao = AppDatabase.getAppDatabase(DisplayCourseActivity.this).getCourseDao();
-        course = dao.getCourseByTitle(course_title);
-        message.setText(String.format("%s %s\n", course.getTitle(), course.getDescription()));
+        course = dao.getCourseByCourseId(course_Id);
+        message.setText(String.format("%s %s\n", course.getCourseId(), course.getDescription()));
 
         // get assignments
-        assignments = dao.getAssignmentByCourseId(course_title);
+        assignments = dao.getAllAssignmentsByCourseId(course_Id);
         if(assignments.isEmpty()) {
             message.append("No assignments added yet");
         } else {

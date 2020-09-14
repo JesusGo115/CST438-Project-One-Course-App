@@ -88,7 +88,7 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         String grade_temp;
         for(Course course: courses) {
             // get overall assignment grades from course
-            assignment_grades = dao.getAssignmentByCourseId(course.getTitle());
+            assignment_grades = dao.getAllAssignmentsByCourseId(course.getCourseId());
             if(assignment_grades.size() != 0) {
                 course_grade = getAverage(assignment_grades);
             }
@@ -100,7 +100,7 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
                 grade_temp += "%";
             }
             rows.add(String.format("Course: %s %s\nInstructor: %s" +
-                    "\nStart Date: %s\nEnd Date: %s\nOverall Score: %s", course.getTitle(), course.getDescription(),
+                    "\nStart Date: %s\nEnd Date: %s\nOverall Score: %s", course.getCourseId(), course.getDescription(),
                     course.getInstructor(), course.getStartDate(), course.getEndDate(), grade_temp));
         }
 
@@ -111,12 +111,12 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
             // get item from ListView
             String selected_item = (String) parent.getItemAtPosition(i);
             // get course
-            String course_title = selected_item.split(" ")[1];
-            course = dao.getCourseByTitle(course_title);
+            String course_Id = selected_item.split(" ")[1];
+            course = dao.getCourseByCourseId(course_Id);
 
             if(course != null) {
                 Intent intent = new Intent(DisplayUserCourseActivity.this, DisplayCourseActivity.class);
-                intent.putExtra("course", course.getTitle());
+                intent.putExtra("course", course.getCourseId());
                 intent.putExtra("username", username);
                 startActivity(intent);
                 finish();

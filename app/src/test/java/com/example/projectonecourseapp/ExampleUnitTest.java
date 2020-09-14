@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
 /**
  * Tests we use to test our functions and the DAO functions
  *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(RobolectricTestRunner.class)
 public class ExampleUnitTest {

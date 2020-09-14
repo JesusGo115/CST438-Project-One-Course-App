@@ -66,9 +66,17 @@ public class AddCourseActivity extends AppCompatActivity {
             alert("Error", "No Course Name entered");
             return;
         }
+        else if (!checkUniqueCourseName(course_name_)) {
+            alert("Error", "Course Name already exists");
+            return;
+        }
 
         if(course_id_.isEmpty()) {
             alert("Error","No Course ID entered");
+            return;
+        }
+        else if (!checkUniqueCourseId(course_id_)) {
+            alert("Error","Course ID already exists");
             return;
         }
 
@@ -91,6 +99,24 @@ public class AddCourseActivity extends AppCompatActivity {
         dao.addCourse(course);
 
         Log.d("AddCourseActivity", "course added to user");
-        alert("Success!", String.format("Course added: %s %s", course.getTitle(), course.getDescription()));
+        alert("Success!", String.format("Course added: %s %s", course.getCourseId(), course.getDescription()));
+    }
+
+    private Boolean checkUniqueCourseName(String courseName) {
+
+        CourseAppDAO mProjectDao = AppDatabase.getAppDatabase(AddCourseActivity.this).getCourseDao();
+
+        int counter = mProjectDao.countCourseName(courseName);
+
+        return counter <= 0;
+    }
+
+    private Boolean checkUniqueCourseId(String courseId) {
+
+        CourseAppDAO mProjectDao = AppDatabase.getAppDatabase(AddCourseActivity.this).getCourseDao();
+
+        int counter = mProjectDao.countCourseId(courseId);
+
+        return counter <= 0;
     }
 }
