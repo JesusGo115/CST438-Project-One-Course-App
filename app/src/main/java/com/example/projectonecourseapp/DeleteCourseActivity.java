@@ -31,6 +31,12 @@ public class DeleteCourseActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Function used to send alerts to user if an error is brought up
+     *
+     * @param title What the alert is referring to
+     * @param message What is wrong with said topic
+     */
     public void alert(String title, String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
@@ -47,6 +53,9 @@ public class DeleteCourseActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     *  Function used to check inputs of the Edit Texts
+     */
     private void checkInputs() {
 
         CourseAppDAO mProjectDao = AppDatabase.getAppDatabase(DeleteCourseActivity.this).getCourseDao();
@@ -85,6 +94,13 @@ public class DeleteCourseActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Function used to delete assignments attached to the course the user wishes to delete
+     *
+     * @param mDao The Project Dao for the functions
+     *
+     * @param course The course the user wishes to delete
+     */
     private void deleteCourseAssignments(CourseAppDAO mDao, Course course) {
 
         int assignmentCounter = mDao.countAssignmentsByCourseId(course.getCourseId());

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.projectonecourseapp.db.AppDatabase;
+import com.example.projectonecourseapp.db.Assignment;
+import com.example.projectonecourseapp.db.Course;
 import com.example.projectonecourseapp.db.CourseAppDAO;
 import com.example.projectonecourseapp.db.User;
 
@@ -24,7 +26,7 @@ import static org.junit.Assert.*;
  *
  */
 @RunWith(RobolectricTestRunner.class)
-public class ExampleUnitTest {
+public class ProjectOneCourseTests {
 
     private CourseAppDAO mCourseDAO;
     private AppDatabase tempDb;
@@ -108,6 +110,54 @@ public class ExampleUnitTest {
         mCourseDAO.updateUser(user1);
 
         assertNotNull(mCourseDAO.getUserByUserAndPass("Totally Not Bob", "Bob"));
+    }
+
+    /**
+     * Tests the Course DAO functions that are used to get data from the COURSE table
+     */
+    @Test
+    public void testingCourseDaoFunctions() {
+        Course course1 = new Course("Soft", "CST-48", "Dr.K", "1/1/2001", "1/2/2001", "Bobby");
+
+        mCourseDAO.addCourse(course1);
+
+        assertNotNull(mCourseDAO.getCourseByCourseId("CST-48"));
+
+        course1 = mCourseDAO.getCourseByCourseIdAndCourseName("CST-48", "Soft");
+
+        course1.setCourseId("CST-Yes");
+
+        mCourseDAO.updateCourse(course1);
+
+        assertNotNull(mCourseDAO.getCourseByCourseId("CST-Yes"));
+
+        mCourseDAO.deleteCourse(mCourseDAO.getCourseByCourseId("CST-Yes"));
+
+        assertNull(mCourseDAO.getCourseByCourseId("CST-Yes"));
+    }
+
+    /**
+     * Tests the Course DAO functions that are used to get data from the COURSE table
+     */
+    @Test
+    public void testingAssignmentDaoFunctions() {
+        Assignment assignment1 = new Assignment("Homework", "5", "2", "1/1/2001", "1/2/2001", "CST-48", "HW");
+
+        mCourseDAO.addAssignment(assignment1);
+
+        assertNotNull(mCourseDAO.getAllAssignmentsByCourseId("CST-48"));
+
+        assignment1 = mCourseDAO.getAssignmentByDetails("Homework");
+
+        assignment1.setDetails("Surprise Final Exam");
+
+        mCourseDAO.updateAssignment(assignment1);
+
+        assertNotNull(mCourseDAO.getAssignmentByDetails("Surprise Final Exam"));
+
+        mCourseDAO.deleteAssignment(mCourseDAO.getAssignmentByDetails("Surprise Final Exam"));
+
+        assertNull(mCourseDAO.getAssignmentByDetails("Surprise Final Exam"));
     }
 
     /**

@@ -15,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
     public static MainActivity instance = null;
     public static String username = null;
 
+    /**
+     * Main Landing page for the application
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         instance = this;

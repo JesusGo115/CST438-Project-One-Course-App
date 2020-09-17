@@ -43,6 +43,9 @@ public class EditUserActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *  Function used to check inputs of the Edit Texts
+     */
     public void checkInputs() {
         EditText first_name = findViewById(R.id.edit_first_name);
         EditText last_name = findViewById(R.id.edit_last_name);
@@ -98,6 +101,12 @@ public class EditUserActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Function used to send alerts to user if an error is brought up
+     *
+     * @param title What the alert is referring to
+     * @param message What is wrong with said topic
+     */
     public void alert(String title, String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);

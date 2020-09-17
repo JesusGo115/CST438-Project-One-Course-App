@@ -73,6 +73,9 @@ public class DisplayCourseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Updates the list in the list view to see assignments
+     */
     public void updateList() {
         ListView lv = findViewById(R.id.list_view);
         List<String> rows = new ArrayList<>();
@@ -100,6 +103,11 @@ public class DisplayCourseActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Function allowing the user to edit assignments
+     *
+     * @param assignment_details The assignment the user wishes to edit
+     */
     public void editAssignment(String assignment_details) {
         CourseAppDAO dao = AppDatabase.getAppDatabase(this).getCourseDao();
         assignment = dao.getAssignmentByDetails(assignment_details);
@@ -177,6 +185,11 @@ public class DisplayCourseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Function to allow user to delete assignments
+     *
+     * @param assignment_details The assignment the user wishes to delete
+     */
     public void deleteAssignment(String assignment_details) {
         CourseAppDAO dao = AppDatabase.getAppDatabase(this).getCourseDao();
         assignment = dao.getAssignmentByDetails(assignment_details);
@@ -199,6 +212,12 @@ public class DisplayCourseActivity extends AppCompatActivity {
         alert.show();
     }
 
+    /**
+     * Function used to send alerts to user if an error is brought up
+     *
+     * @param title What the alert is referring to
+     * @param message What is wrong with said topic
+     */
     public void alert(String title, String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
@@ -216,6 +235,13 @@ public class DisplayCourseActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Function to get the assignment details and attributes
+     *
+     * @param assignment The assignment the user wishes to see
+     *
+     * @return The assignment's details and attributes
+     */
     public String getAssignmentDetails(Assignment assignment) {
         return String.format("%s\nAssigned: %s\nDue: %s \nScore: %s/%s\nCategory: %s",
                 assignment.getDetails(), assignment.getAssignedDate(), assignment.getDueDate(),

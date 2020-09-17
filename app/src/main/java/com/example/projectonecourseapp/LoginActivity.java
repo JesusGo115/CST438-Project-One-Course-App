@@ -16,6 +16,9 @@ import com.example.projectonecourseapp.db.User;
 
 public class LoginActivity extends AppCompatActivity {
 
+    /**
+     * Main Login page for the application
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

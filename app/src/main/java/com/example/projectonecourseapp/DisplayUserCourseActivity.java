@@ -80,7 +80,9 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         }
     }
 
-    // update course list
+    /**
+     * Updates the list in the list view to see assignments
+     */
     public void updateList() {
         ListView lv = findViewById(R.id.list_view);
         List<String> rows = new ArrayList<>();
@@ -124,6 +126,13 @@ public class DisplayUserCourseActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Gets average of grade for all the assignments in a course
+     *
+     * @param assignments List of assignments from a course
+     *
+     * @return The average grade between all assignments
+     */
     public double getAverage(List<Assignment> assignments) {
         double grades = 0;
         double earned_temp;

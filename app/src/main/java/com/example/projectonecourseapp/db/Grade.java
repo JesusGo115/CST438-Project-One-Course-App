@@ -3,7 +3,7 @@ package com.example.projectonecourseapp.db;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = AppDatabase.GRADE_TABLE)
+@Entity(tableName = AppDatabase.GRADE_TABLE) //NOT USED
 public class Grade {
 
     @PrimaryKey

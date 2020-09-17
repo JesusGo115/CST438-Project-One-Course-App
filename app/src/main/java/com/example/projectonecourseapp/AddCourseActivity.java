@@ -31,6 +31,12 @@ public class AddCourseActivity extends AppCompatActivity {
         submit_button.setOnClickListener(v -> checkInputs());
     }
 
+    /**
+     * Function used to send alerts to user if an error is brought up
+     *
+     * @param title What the alert is referring to
+     * @param message What is wrong with said topic
+     */
     public void alert(String title, String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
@@ -47,6 +53,9 @@ public class AddCourseActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     *  Function used to check inputs of the Edit Texts
+     */
     public void checkInputs() {
         EditText course_name = findViewById(R.id.course_name);
         EditText course_id = findViewById(R.id.course_id);
@@ -102,6 +111,13 @@ public class AddCourseActivity extends AppCompatActivity {
         alert("Success!", String.format("Course added: %s %s", course.getCourseId(), course.getDescription()));
     }
 
+    /**
+     * Function used to check the Course Name Edit Text to make sure the same name doesn't already exist in the database
+     *
+     * @param courseName The name entered in the Edit Text
+     *
+     * @return True if the name is unique, false if not
+     */
     private Boolean checkUniqueCourseName(String courseName) {
 
         CourseAppDAO mProjectDao = AppDatabase.getAppDatabase(AddCourseActivity.this).getCourseDao();
@@ -111,6 +127,13 @@ public class AddCourseActivity extends AppCompatActivity {
         return counter <= 0;
     }
 
+    /**
+     * Function used to check the Course id Edit Text to make sure the same name doesn't already exist in the database
+     *
+     * @param courseId The course id entered in the Edit Text
+     *
+     * @return True if the id is unique, false if not
+     */
     private Boolean checkUniqueCourseId(String courseId) {
 
         CourseAppDAO mProjectDao = AppDatabase.getAppDatabase(AddCourseActivity.this).getCourseDao();

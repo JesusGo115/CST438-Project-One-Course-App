@@ -11,12 +11,14 @@ import androidx.room.Update;
 @Dao
 public interface CourseAppDAO
 {
+
+    /**
+     * Functions used for the Users table in the database
+     */
+
     //User
     @Insert
     void addUser(User...users);
-
-    @Query("select * from " + AppDatabase.USER_TABLE + " where mUserName = :username and mPassword = :password")
-    User login(String username, String password);
 
     @Update
     void updateUser(User user);
@@ -24,11 +26,11 @@ public interface CourseAppDAO
     @Delete
     void deleteUser(User user);
 
+    @Query("select * from " + AppDatabase.USER_TABLE + " where mUserName = :username and mPassword = :password")
+    User login(String username, String password);
+
     @Query("SELECT * FROM " + AppDatabase.USER_TABLE)
     List<User> getAllUsers();
-
-    @Query("SELECT COUNT(*) FROM " + AppDatabase.USER_TABLE + " WHERE mUserName = :username")
-    int countUser(String username);
 
     @Query("SELECT * FROM " + AppDatabase.USER_TABLE + " WHERE mUserName = :username")
     User getUserByUsername(String username);
@@ -37,6 +39,10 @@ public interface CourseAppDAO
     User getUserByUserAndPass(String username, String password);
 
     //********************************************
+
+    /**
+     * Functions used for the Course table in the database
+     */
 
     //Course
     @Insert
@@ -48,20 +54,11 @@ public interface CourseAppDAO
     @Delete
     void deleteCourse(Course course);
 
-    @Query("SELECT * FROM " + AppDatabase.COURSE_TABLE)
-    List<Course> getAllCourses();
-
-    @Query("SELECT * FROM " + AppDatabase.COURSE_TABLE + " WHERE mCourseId = :courseId")
-    List<Course> getAllCoursesByCourseId(String courseId);
-
     @Query("select * from " + AppDatabase.COURSE_TABLE + " where mCourseId = :courseId")
     Course getCourseByCourseId(String courseId);
 
     @Query("select * from " + AppDatabase.COURSE_TABLE + " where mCourseId = :courseId AND mDescription = :courseName")
     Course getCourseByCourseIdAndCourseName(String courseId, String courseName);
-
-    @Query("SELECT * FROM " + AppDatabase.COURSE_TABLE + " WHERE mCourseKey = :courseKey")
-    List<Course> getCourseByCourseKey(int courseKey);
 
     @Query("select * from " + AppDatabase.COURSE_TABLE + " where username = :username")
     List<Course> getCoursesTaken(String username);
@@ -74,26 +71,9 @@ public interface CourseAppDAO
 
     //********************************************
 
-    //GradeCategory
-    @Insert
-    void addGradeCategory(GradeCategory...gradeCategories);
-
-    @Update
-    void updateGradeCategory(GradeCategory...gradeCategories);
-
-    @Delete
-    void deleteGradeCategory(GradeCategory gradeCategory);
-
-    @Query("SELECT * FROM " + AppDatabase.GRADE_CATEGORY_TABLE)
-    List<GradeCategory> getAllGradeCategories();
-
-    @Query("SELECT * FROM " + AppDatabase.GRADE_CATEGORY_TABLE + " WHERE mTitle = :title")
-    List<GradeCategory> getAllGradeCategoriesByTitle(String title);
-
-    @Query("SELECT * FROM " + AppDatabase.GRADE_CATEGORY_TABLE + " WHERE mCategoryId = :categoryId")
-    GradeCategory getGradeCategoryByCategoryId(int categoryId);
-
-    //********************************************
+    /**
+     * Functions used for the Assignment table in the database
+     */
 
     //Assignment
     @Insert
@@ -111,12 +91,6 @@ public interface CourseAppDAO
     @Query("SELECT COUNT(*) FROM " + AppDatabase.ASSIGNMENT_TABLE + " WHERE mCourseId = :courseId")
     int countAssignmentsByCourseId(String courseId);
 
-    @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE + " WHERE mAssignmentId = :assignmentId")
-    List<Assignment> getAssignmentByAssignmentId(int assignmentId);
-
-    @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE + " WHERE mCategoryId = :categoryId")
-    Assignment getAssignmentByCategoryId(String categoryId);
-
     @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE + " WHERE mCourseId = :courseId")
     List<Assignment> getAllAssignmentsByCourseId(String courseId);
 
@@ -125,52 +99,13 @@ public interface CourseAppDAO
 
     //********************************************
 
-    //Grade
-    @Insert
-    void addGrade(Grade...grades);
-
-    @Update
-    void updateGrade(Grade...grades);
-
-    @Delete
-    void deleteGrade(Grade grade);
-
-    @Query("SELECT * FROM " + AppDatabase.GRADE_TABLE)
-    List<Grade> getAllGrades();
-
-    @Query("SELECT * FROM " + AppDatabase.GRADE_TABLE + " WHERE mGradeId = :gradeId")
-    Grade getGradeByGradeId(int gradeId);
-
-    @Query("SELECT * FROM " + AppDatabase.GRADE_TABLE + " WHERE mAssignmentId = :assignmentId")
-    Grade getGradeByAssignmentId(int assignmentId);
-
-    @Query("SELECT * FROM " + AppDatabase.GRADE_TABLE + " WHERE mCourseId = :courseId")
-    Grade getGradeByCourseId(int courseId);
-
-    @Query("SELECT * FROM " + AppDatabase.GRADE_TABLE + " WHERE mStudentId = :studentId")
-    Grade getGradeByStudentId(int studentId);
+    //GradeCategory (Isn't used)
 
     //********************************************
 
-    //Enrollment
-    @Insert
-    void addEnrollment(Enrollment...enrollments);
+    //Grade (Isn't Used)
 
-    @Update
-    void updateEnrollment(Enrollment...enrollments);
+    //********************************************
 
-    @Delete
-    void deleteEnrollment(Enrollment enrollment);
-
-    @Query("SELECT * FROM " + AppDatabase.ENROLLMENT_TABLE)
-    List<Enrollment> getAllEnrollments();
-
-    @Query("SELECT * FROM " + AppDatabase.ENROLLMENT_TABLE + " WHERE mEnrollmentId = :enrollmentId")
-    Enrollment getEnrollmentByEnrollmentId(int enrollmentId);
-
-    @Query("SELECT * FROM " + AppDatabase.ENROLLMENT_TABLE + " WHERE mCourseId = :courseId")
-    Enrollment getEnrollmentByCourseId(int courseId);
-
-    @Query("SELECT * FROM " + AppDatabase.ENROLLMENT_TABLE + " WHERE mStudentId = :studentId")
-    Enrollment getEnrollmentByStudentId(int studentId);
+    //Enrollment (Isn't used)
 }

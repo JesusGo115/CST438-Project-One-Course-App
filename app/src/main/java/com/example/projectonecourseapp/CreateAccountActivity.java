@@ -33,6 +33,9 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Creates account for user after they type in their information
+     */
     public void createAccount() {
         TextView message = findViewById(R.id.message);
         EditText first_name = findViewById(R.id.first_name);
@@ -63,6 +66,13 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * Function used to send alerts to user if an error is brought up
+     *
+     * @param title What the alert is referring to
+     * @param message What is wrong with said topic
+     */
     public void alert(String title, final String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message);
