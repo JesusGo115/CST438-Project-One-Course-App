@@ -161,15 +161,99 @@ public class ProjectOneCourseTests {
     }
 
     /**
-     * Tests the Intent to see if the app could change activities
+     * Tests the Intent to see if the app could change activities to LoginActivity
      */
     @Test
     public void testLoginIntent() {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        Intent i = testLoginIntentFunction(context, "Bobert");
+        Intent i = testIntentFunction(context, "Bobert", LoginActivity.class);
 
         assertEquals("com.example.projectonecourseapp.LoginActivity", i.resolveActivity(context.getPackageManager()).getClassName());
+    }
+
+    /**
+     * Tests the Intent to see if the app could change activities to EditUserActivity
+     */
+    @Test
+    public void testEditUserIntent() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+        Intent i = testIntentFunction(context, "Bobby", EditUserActivity.class);
+
+        assertEquals("com.example.projectonecourseapp.EditUserActivity", i.resolveActivity(context.getPackageManager()).getClassName());
+    }
+
+    /**
+     * Tests the Intent to see if the app could change activities to DisplayUserCourseActivity
+     */
+    @Test
+    public void testDisplayUserCourseIntent() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+        Intent i = testIntentFunction(context, "Bobbet", DisplayUserCourseActivity.class);
+
+        assertEquals("com.example.projectonecourseapp.DisplayUserCourseActivity", i.resolveActivity(context.getPackageManager()).getClassName());
+    }
+
+    /**
+     * Tests the Intent to see if the app could change activities to DisplayCourseActivity
+     */
+    @Test
+    public void testDisplayCourseIntent() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+        Intent i = testIntentFunction(context, "Bob", DisplayCourseActivity.class);
+
+        assertEquals("com.example.projectonecourseapp.DisplayCourseActivity", i.resolveActivity(context.getPackageManager()).getClassName());
+    }
+
+    /**
+     * Tests the Intent to see if the app could change activities to DeleteCourseActivity
+     */
+    @Test
+    public void testDeleteCourseIntent() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+        Intent i = testIntentFunction(context, "Bobby", DeleteCourseActivity.class);
+
+        assertEquals("com.example.projectonecourseapp.DeleteCourseActivity", i.resolveActivity(context.getPackageManager()).getClassName());
+    }
+
+    /**
+     * Tests the Intent to see if the app could change activities to CreateAccountActivity
+     */
+    @Test
+    public void testCreateAccountIntent() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+        Intent i = testIntentFunction(context, "Bobby", CreateAccountActivity.class);
+
+        assertEquals("com.example.projectonecourseapp.CreateAccountActivity", i.resolveActivity(context.getPackageManager()).getClassName());
+    }
+
+    /**
+     * Tests the Intent to see if the app could change activities to AddCourseActivity
+     */
+    @Test
+    public void testAddCourseIntent() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+        Intent i = testIntentFunction(context, "Bobby", AddCourseActivity.class);
+
+        assertEquals("com.example.projectonecourseapp.AddCourseActivity", i.resolveActivity(context.getPackageManager()).getClassName());
+    }
+
+    /**
+     * Tests the Intent to see if the app could change activities to AddAssignmentActivity
+     */
+    @Test
+    public void testAddAssignmentIntent() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+        Intent i = testIntentFunction(context, "Bobby", AddAssignmentActivity.class);
+
+        assertEquals("com.example.projectonecourseapp.AddAssignmentActivity", i.resolveActivity(context.getPackageManager()).getClassName());
     }
 
     /**
@@ -181,8 +265,8 @@ public class ProjectOneCourseTests {
      *
      * @return Intent of the new activity we are moving to
      */
-    public static Intent testLoginIntentFunction(Context context, String username) {
-        Intent intent = new Intent(context, LoginActivity.class);
+    public static Intent testIntentFunction(Context context, String username, Class<?> activity) {
+        Intent intent = new Intent(context, activity);
         intent.putExtra("Tag --- ", username);
 
         return intent;
