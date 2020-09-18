@@ -85,8 +85,8 @@ public interface CourseAppDAO
     @Delete
     void deleteAssignment(Assignment assignment);
 
-    @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE)
-    List<Assignment> getAllAssignments();
+    @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE + " order by mCategoryId desc ")
+    List<Assignment> getAllAssignmentsByCategoryId();
 
     @Query("SELECT COUNT(*) FROM " + AppDatabase.ASSIGNMENT_TABLE + " WHERE mCourseId = :courseId")
     int countAssignmentsByCourseId(String courseId);
@@ -94,7 +94,7 @@ public interface CourseAppDAO
     @Query("SELECT * FROM " + AppDatabase.ASSIGNMENT_TABLE + " WHERE mCourseId = :courseId")
     List<Assignment> getAllAssignmentsByCourseId(String courseId);
 
-    @Query("select * from " + AppDatabase.ASSIGNMENT_TABLE + " where mDetails = :details")
+    @Query("select * from " + AppDatabase.ASSIGNMENT_TABLE + " where mDetails = :details ")
     Assignment getAssignmentByDetails(String details);
 
     //********************************************

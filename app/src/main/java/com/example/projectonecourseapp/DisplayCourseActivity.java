@@ -80,7 +80,6 @@ public class DisplayCourseActivity extends AppCompatActivity {
         ListView lv = findViewById(R.id.list_view);
         List<String> rows = new ArrayList<>();
         for(Assignment assignment: assignments) {
-            // temporary display
             rows.add(getAssignmentDetails(assignment));
         }
 
@@ -123,10 +122,12 @@ public class DisplayCourseActivity extends AppCompatActivity {
 
             final EditText max_score = new EditText(this);
             max_score.setHint("Enter max score");
+            max_score.setInputType(InputType.TYPE_CLASS_NUMBER);
             layout.addView(max_score);
 
             final EditText earned_score = new EditText(this);
             earned_score.setHint("Enter your earned score");
+            earned_score.setInputType(InputType.TYPE_CLASS_NUMBER);
             layout.addView(earned_score);
 
             final EditText assigned_date = new EditText(this);
@@ -143,16 +144,15 @@ public class DisplayCourseActivity extends AppCompatActivity {
             category_id.setHint("HW/Quiz/Project/Exam");
             layout.addView(category_id);
 
-            String description_ = description.getText().toString();
-            String max_score_ = max_score.getText().toString();
-            String earned_score_ = earned_score.getText().toString();
-            String assigned_date_ = assigned_date.getText().toString();
-            String due_date_ = due_date.getText().toString();
-            String category_id_ = category_id.getText().toString();
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this)
                     .setTitle("Edit Assignment")
                     .setPositiveButton("Okay", (dialog, which) -> {
+                        String description_ = description.getText().toString();
+                        String max_score_ = max_score.getText().toString();
+                        String earned_score_ = earned_score.getText().toString();
+                        String assigned_date_ = assigned_date.getText().toString();
+                        String due_date_ = due_date.getText().toString();
+                        String category_id_ = category_id.getText().toString();
 
                         if(description_.isEmpty() || max_score_.isEmpty() || earned_score_.isEmpty()
                                 || assigned_date_.isEmpty() || due_date_.isEmpty() || category_id_.isEmpty()) {
@@ -246,6 +246,11 @@ public class DisplayCourseActivity extends AppCompatActivity {
         return String.format("%s\nAssigned: %s\nDue: %s \nScore: %s/%s\nCategory: %s",
                 assignment.getDetails(), assignment.getAssignedDate(), assignment.getDueDate(),
                 assignment.getEarnedScore(), assignment.getMaxScore(), assignment.getCategoryId());
+    }
+
+    // implementing some time
+    public void updateDisplayByCategory() {
+
     }
 
 }
